@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music Widget</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- CSS 3D background layers (video removed) -->
+  <div class="bg" aria-hidden="true">
+    <!-- Local background image: place your picture at assets/images/bg.jpg -->
+    <div class="bg-image" aria-hidden="true"></div>
+    <span class="layer layer--far"></span>
+    <span class="layer layer--mid"></span>
+    <span class="layer layer--near"></span>
+    <span class="orb orb--one"></span>
+    <span class="orb orb--two"></span>
+  </div>
+
+  <!-- Music Widget Container -->
+  <div class="music-container " id="music-container" >
+    <!-- Widget -->
+    <div class="music-widget" id="music-widget">
+      <div class="player-row">
+        <img
+          src="assets\images\f81f7940706ea99d42f42f5e991f3f74.jpg"
+          class="disc"
+          id="disc"
+          alt="music disc"
+        >
+
+        <div class="music-info">
+          <h4 id="title" class="marquee-title">
+            <span class="marquee-mask" aria-hidden="false">
+              <span class="marquee-text">Lo-Fi Beats</span>
+            </span>
+          </h4>
+          <p id="artist" class="marquee-artist">
+            <span class="marquee-mask" aria-hidden="false" data-mask-width="180px" data-direction="ltr" data-speed="30">
+              <span class="marquee-text">Chill Vibes</span>
+            </span>
+          </p>
+
+          <div class="controls" aria-hidden="false">
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-filled" id="progress"></div>
+            </div>
+
+            <div class="ctrl-row">
+              <span class="time">0:00</span>
+              <div class="ctrl-actions">
+                <button class="small-btn" id="prev">⏮</button>
+                <button class="small-btn" id="play-inline">▶</button>
+                <button class="small-btn" id="next">⏭</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio (MP4 is OK) -->
+    <audio id="audio" src="assets/audio/Ash.mp4"></audio>
+
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

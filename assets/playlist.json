@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Ash",
+    "artist": "Le Sserafim(르세라핌)",
+    "src": "assets/audio/Ash.mp4",
+    "cover": "assets/images/Ash.jpg"
+  },
+  {
+    "title": "Flowers",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/aespa 에스파 'Flowers' (Official Audio).mp4",
+    "cover": "assets/images/Flowers.jpg"
+  },
+  {
+    "title": "Fame Is A Gun",
+    "artist": "Adison Rae",
+    "src": "assets/audio/Fame is a gun.mp4",
+    "cover": "assets/images/Fame.jpg"
+  },
+  {
+    "title": "Shinigami Eyes  ",
+    "artist": "Grimes (그라임스) ",
+    "src": "assets/audio/Grimes - Shinigami Eyes (Lyrics).mp4",
+    "cover": "assets/images/ShigamiEyes.jpg"
+  },
+    {
+    "title": "Lucky One  ",
+    "artist": "Cosmosy ",
+    "src": "assets/audio/luckyone.mp4",
+    "cover": "assets/images/luckyone.jpg"
+  }
+]
