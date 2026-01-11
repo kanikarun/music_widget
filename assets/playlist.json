@@ -28,6 +28,60 @@
     "artist": "Cosmosy ",
     "src": "assets/audio/luckyone.mp4",
     "cover": "assets/images/luckyone.jpg"
+  },
+      {
+    "title": "Diet Pepsi  ",
+    "artist": "Adison Rae",
+    "src": "assets/audio/diet_pepsi.mp4",
+    "cover": "assets/images/dietpepsi.jpg"
+  },
+    {
+    "title": "Heaven And Back  ",
+    "artist": "chase atlantic ",
+    "src": "assets/audio/Chase Atlantic - HEAVEN AND BACK.mp4",
+    "cover": "assets/images/heaven_and_back.jpg"
+  },
+      {
+    "title": "Hurt You  ",
+    "artist": "The Weeknd ",
+    "src": "assets/audio/The Weeknd - Hurt You feat. Gesaffelstein (Official Audio).mp4",
+    "cover": "assets/images/hurt you.jpg"
+  },
+        {
+    "title": "Deja Vu  ",
+    "artist": "Dream Catcher ",
+    "src": "assets/audio/Dreamcatcher(드림캐쳐) '데자부 (Deja Vu)' MV.mp4",
+    "cover": "assets/images/dream catcher.jpg"
+  },
+    {
+    "title": "Greedy",
+    "artist": "Tate McRae",
+    "src": "assets/audio/Tate McRae - greedy (Official Video).mp4",
+    "cover": "assets/images/Greedy.jpg"
+  },
+  {
+    "title": "4 Walls",
+    "artist": "F(X)",
+    "src": "assets/audio/F(x) 4 walls audio ver..mp4",
+    "cover": "assets/images/world_class_sinner.jpg"
+  },
+  {
+    "title": "Drift",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/dift-aespa.mp4",
+    "cover": "assets/images/dift aespa.jpg"
+  },
+  {
+    "title": "Mine",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/aespa 'Mine' (Official Audio).mp4",
+    "cover": "assets/images/mine.jpg"
+  },
+  {
+    "title": "Kill It",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/Kill It.mp4",
+    "cover": "assets/images/kill--it.jpg"
   }
 
 ]

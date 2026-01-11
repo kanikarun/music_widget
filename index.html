@@ -20,6 +20,26 @@
     <span class="orb orb--two"></span>
   </div>
 
+
+    <!-- Playlist Toggle Button -->
+  <button class="playlist-toggle-btn" id="playlist-toggle" title="Toggle Playlist">
+    <span class="playlist-icon">♫</span>
+    <span class="playlist-text">Playlist</span>
+  </button>
+
+  <!-- Playlist Overlay -->
+  <div class="playlist-overlay" id="playlist-overlay">
+    <div class="playlist-header">
+      <h3>Playlist</h3>
+      <button class="playlist-close" id="playlist-close">✕</button>
+    </div>
+    <div class="playlist-tracks" id="playlist-tracks">
+      <!-- Tracks will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <!-- Music Widget Container -->
+  <div class="music-container " id="music-container" >
   <!-- Music Widget Container -->
   <div class="music-container " id="music-container" >
     <!-- Widget -->
@@ -49,7 +69,7 @@
               <div class="progress-filled" id="progress"></div>
             </div>
 
-<div class="ctrl-row">
+            <div class="ctrl-row">
               <span class="time">0:00</span>
               <div class="ctrl-actions">
                 <button class="small-btn" id="prev">⏮</button>
@@ -75,7 +95,8 @@
   </div>
 
   <script src="js/main.js"></script>
-   <script src="js/volume.js"></script>  ← This loads the volume controls
+   <script src="js/volume.js"></script>  
+   <script src="js/playlist.js"></script>
    </body>
 </body>
 </html>
