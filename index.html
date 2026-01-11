@@ -49,7 +49,7 @@
               <div class="progress-filled" id="progress"></div>
             </div>
 
-            <div class="ctrl-row">
+<div class="ctrl-row">
               <span class="time">0:00</span>
               <div class="ctrl-actions">
                 <button class="small-btn" id="prev">⏮</button>
@@ -57,16 +57,25 @@
                 <button class="small-btn" id="next">⏭</button>
               </div>
             </div>
+
+            <div class="volume-row">
+              <button class="small-btn volume-btn" id="volume-btn" title="Volume">🔊</button>
+              <div class="volume-slider-container" id="volume-slider-container">
+                <input type="range" min="0" max="100" value="70" class="volume-slider" id="volume-slider" aria-label="Volume control">
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
-
     <!-- Audio (MP4 is OK) -->
     <audio id="audio" src="assets/audio/Ash.mp4"></audio>
 
   </div>
 
   <script src="js/main.js"></script>
+   <script src="js/volume.js"></script>  ← This loads the volume controls
+   </body>
 </body>
 </html>

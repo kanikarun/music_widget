@@ -12,6 +12,7 @@ const titleEl = document.getElementById('title');
 const artistEl = document.getElementById('artist');
 const bgImage = document.querySelector('.bg-image');
 
+
 let isPlaying = false; 
 
 // Default playlist (edit here or use an external playlist file)
