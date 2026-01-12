@@ -315,10 +315,22 @@
   justify-content: center;  /* centers the whole row */
   align-items: center;
 }
-#play-inline {
-  width: 60px;
-  height: 60px;
+#prev svg {
+  transform: translateX(-1.5px);
 }
+
+#next svg {
+  transform: translateX(1.5px);
+}
+#play-inline {
+  font-size: 0;          /* 🔥 kills emoji fallback */
+  line-height: 0;
+}
+
+#play-inline svg {
+  font-size: initial;    /* restore svg size */
+}
+
 
 .small-btn {
   background: transparent;
@@ -333,7 +345,7 @@
   transition: background 0.2s;
 }
 .small-btn:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(249, 15, 15, 0.1);
 }
 .small-btn:active{transform:scale(.98)}
 .small-btn:focus{outline:2px solid rgba(var(--accent-b),0.25);outline-offset:3px}
@@ -347,6 +359,7 @@
 .small-btn:hover svg {
   color: #1db954; /* hover highlight like Spotify */
 }
+
 
 #play-inline{width:60px;height:60px;border-radius:999px;background:linear-gradient(135deg, rgba(var(--accent-a),0.14), rgba(var(--accent-b),0.10));box-shadow:0 10px 30px rgba(12,18,36,0.6), 0 0 26px rgba(var(--accent-a),0.06);color:var(--text);border:1px solid rgba(255,255,255,0.04);font-size:20px}
 #play-inline.playing{box-shadow:0 12px 40px rgba(12,18,36,0.7), 0 0 36px rgba(var(--accent-b),0.14)}
