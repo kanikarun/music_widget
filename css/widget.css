@@ -339,18 +339,42 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  width: 50px;       /* fixed square size */
+  width: 50px;
   height: 50px;
+
   display: flex;
-  align-items: center;  /* vertical center */
-  justify-content: center; /* horizontal center */
-  border-radius: 50%; /* optional: round button */
-  transition: background 0.2s;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20%;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+
+  /* EVEN SPREAD AROUND BORDER */
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),   /* subtle edge */
+    0 0 12px 3px rgba(0, 0, 0, 0.28);      /* soft halo */
 }
+
+
+/* Hover = more float */
 .small-btn:hover {
-  background: rgba(249, 15, 15, 0.1);
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 22px 6px rgba(0, 0, 0, 0.38);
 }
-.small-btn:active{transform:scale(.98)}
+
+/* Pressed */
+.small-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 0 10px 2px rgba(0, 0, 0, 0.3);
+}
+
+
 .small-btn:focus{outline:2px solid rgba(var(--accent-b),0.25);outline-offset:3px}
 
 .small-btn svg {
