@@ -94,52 +94,59 @@ function renderPlaylist() {
   // Sort tracks by current mode & order
   sortTracks();
 
-  if (sortMode === 'artist') {
-    const grouped = groupTracksByArtist(window.tracks);
+if (sortMode === 'artist') {
+  const grouped = groupTracksByArtist(window.tracks);
 
-    const sortedArtists = Object.keys(grouped).sort((a, b) => {
-      const r = a.localeCompare(b, undefined, { sensitivity: 'base' });
-      return sortOrder === 'asc' ? r : -r;
-    });
+  const sortedArtists = Object.keys(grouped).sort((a, b) => {
+    const r = a.localeCompare(b, undefined, { sensitivity: 'base' });
+    return sortOrder === 'asc' ? r : -r;
+  });
 
-    sortedArtists.forEach(artist => {
-      const header = document.createElement('div');
-      header.className = 'playlist-artist-header';
-      header.innerHTML = `
-        <span>${artist}</span>
-        <span>${collapsedArtists.has(artist) ? '▶' : '▼'}</span>
-      `;
-      header.addEventListener('click', (e) => {
-        e.stopPropagation();
-        collapsedArtists.has(artist)
-          ? collapsedArtists.delete(artist)
-          : collapsedArtists.add(artist);
-        renderPlaylist();
-      });
-
-      playlistTracks.appendChild(header);
-
-      if (collapsedArtists.has(artist)) return;
-
-      // Sort tracks inside each artist
-      grouped[artist]
-        .sort((a, b) => {
-          const r = a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
-          return sortOrder === 'asc' ? r : -r;
-        })
-        .filter(matchesSearch)
-        .forEach(track => {
-          const index = window.tracks.indexOf(track);
-          createPlaylistItem(track, index);
-        });
-    });
-  } else {
-    // TITLE MODE
-    window.tracks
+  sortedArtists.forEach(artist => {
+    // Filter tracks first to check if any match
+    const matchingTracks = grouped[artist]
       .filter(matchesSearch)
-      .forEach((track, index) => {
-        createPlaylistItem(track, index);
+      .sort((a, b) => {
+        const r = a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+        return sortOrder === 'asc' ? r : -r;
       });
+
+    // Only show artist header if there are matching tracks
+    if (matchingTracks.length === 0) return;
+
+    const header = document.createElement('div');
+    header.className = 'playlist-artist-header';
+    header.innerHTML = `
+      <span>${artist}</span>
+      <span>${collapsedArtists.has(artist) ? '▶' : '▼'}</span>
+    `;
+    header.addEventListener('click', (e) => {
+      e.stopPropagation();
+      collapsedArtists.has(artist)
+        ? collapsedArtists.delete(artist)
+        : collapsedArtists.add(artist);
+      renderPlaylist();
+    });
+
+    playlistTracks.appendChild(header);
+
+    if (collapsedArtists.has(artist)) return;
+
+    // Add the matching tracks
+    matchingTracks.forEach(track => {
+      const index = window.tracks.indexOf(track);
+      createPlaylistItem(track, index);
+    });
+  });
+} else {
+    // TITLE MODE
+// TITLE MODE
+window.tracks
+  .map((track, originalIndex) => ({ track, originalIndex })) // Keep original index
+  .filter(({ track }) => matchesSearch(track))
+  .forEach(({ track, originalIndex }) => {
+    createPlaylistItem(track, originalIndex);  // ✅ Use original index
+  });
   }
 
   restoreCurrentIndex(currentTrackKey);
@@ -199,16 +206,15 @@ function renderPlaylist() {
 });
 
 
-  document.addEventListener('click', e => {
-    if (
-      isPlaylistOpen &&
-      !playlistOverlay.contains(e.target) &&
-      !playlistToggle.contains(e.target)
-    ) {
-      closePlaylist();
-    }
-  });
-
+    document.addEventListener('click', e => {
+      if (
+        isPlaylistOpen &&
+        !playlistOverlay.contains(e.target) &&
+        !playlistToggle.contains(e.target)
+      ) {
+        closePlaylist();
+      }
+    });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && isPlaylistOpen) closePlaylist();
   });

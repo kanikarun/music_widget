@@ -112,6 +112,55 @@
     "artist": "ITZY",
     "src": "assets/audio/Imaginary Friend.mp4",
     "cover": "assets/images/imaginary_friend.jpg"
+  },
+  {
+    "title": "Simon Says",
+    "artist": "YC BANKS ft B Smyth",
+    "src": "assets/audio/YC BANKS - Simon Says ft. B Smyth  (Audio) _ (Spread open your legs).mp4",
+    "cover": "assets/images/simonsay.jpg"
+  },
+  {
+    "title": "Reminder",
+    "artist": "The Weeknd ",
+    "src": "assets/audio/Reminder.mp4",
+    "cover": "assets/images/reminder.jpg"
+  },
+    {
+    "title": "Everytime",
+    "artist": "Ariana Grande",
+    "src": "assets/audio/everytime.mp4",
+    "cover": "assets/images/everytime.jpg"
+  },
+  {
+    "title": "Double Fantasy",
+    "artist": "The Weeknd ",
+    "src": "assets/audio/doubleFantasy.mp4",
+    "cover": "assets/images/double_fantasy.jpg"
+  },
+  {
+    "title": "Unforgettable",
+    "artist": "French Montana",
+    "src": "assets/audio/Unforgettable.mp4",
+    "cover": "assets/images/unforgetable.jpg"
+  },
+  {
+    "title": "Escapism",
+    "artist": "RAYE",
+    "src": "assets/audio/Escapism._Sped_Up_144p.mp4",
+    "cover": "assets/images/escip.jpg"
+  },
+  {
+    "title": "Harleys in Hawaii",
+    "artist": "Katy Perry",
+    "src": "assets/audio/Harleys_In_Hawaii_144P.mp4",
+    "cover": "assets/images/harley_in_hawaii.jpg"
+  },
+  {
+    "title": "WHEN I M WITH YOU",
+    "artist": "Lisa ft Tyla ",
+    "src": "assets/audio/LISA_-_WHEN_I_M_WITH_YOU_feat._Tyla_Official_Music_Video_360P.mp4",
+    "cover": "assets/images/wheniamwithyou.jpg"
   }
+
 
 ]
