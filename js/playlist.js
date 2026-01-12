@@ -21,6 +21,7 @@ let searchQuery = '';
   const sortArtistBtn = document.getElementById('sort-artist');
   const sortOrderBtn = document.getElementById('sort-order');
   const searchInput = document.getElementById('playlist-search');
+  
 
   let isPlaylistOpen = false;
 
@@ -40,17 +41,19 @@ let searchQuery = '';
   // ===============================
   // SORT BUTTON STATE
   // ===============================
-  function updateSortButtonState() {
-    sortTitleBtn?.classList.toggle('active', sortMode === 'title');
-    sortArtistBtn?.classList.toggle('active', sortMode === 'artist');
+function updateSortButtonState() {
+  sortTitleBtn?.classList.toggle('active', sortMode === 'title');
+  sortArtistBtn?.classList.toggle('active', sortMode === 'artist');
 
-    if (sortOrderBtn) {
-      sortOrderBtn.disabled = sortMode === 'artist';
-      sortOrderBtn.style.opacity = sortMode === 'artist' ? '0.4' : '1';
-      sortOrderBtn.textContent =
-        sortOrder === 'asc' ? '⬆ A–Z' : '⬇ Z–A';
-    }
+  if (sortOrderBtn) {
+    // Allow sorting by order for both title and artist
+    sortOrderBtn.disabled = false;
+    sortOrderBtn.style.opacity = '1';
+    sortOrderBtn.textContent =
+      sortOrder === 'asc' ? '⬆ A–Z' : '⬇ Z–A';
   }
+}
+
 
   // ===============================
   // SEARCH FILTER
@@ -213,6 +216,7 @@ let searchQuery = '';
     savePreferences();
     renderPlaylist();
   });
+
 
   searchInput?.addEventListener('input', e => {
     searchQuery = e.target.value.toLowerCase();

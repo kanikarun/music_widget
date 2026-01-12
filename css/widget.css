@@ -1,0 +1,354 @@
+/* Container center */
+.music-container{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  right:auto;
+  bottom:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  z-index:10;
+  padding:16px;
+  width:auto;
+  max-width:96vw; /* responsive on small screens */
+  box-sizing:border-box;
+}
+
+
+/* Accessible play button (large circle) */
+.circle-button{display:flex;align-items:center;justify-content:center;width:78px;height:78px;border-radius:999px;border:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));color:var(--text);font-size:28px;cursor:pointer;backdrop-filter:blur(8px) saturate(120%);box-shadow:0 10px 30px rgba(2,6,23,0.6);}
+.circle-button:focus{outline:2px solid rgba(125,95,255,0.45);outline-offset:4px}
+
+
+
+
+
+
+
+/* Frosted Glass Card */
+.music-widget{
+  position:relative;
+  width: min(720px, 92vw);
+  max-width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center; /* center children horizontally */
+  gap:30px;
+  padding:60px 72px;
+  border-radius:16px;
+  background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px) saturate(125%);
+  box-shadow: 0 10px 30px rgba(3,6,20,0.6), 0 2px 10px rgba(0,0,0,0.45);
+  transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s;
+} 
+.music-widget:hover{transform:translateY(-8px);box-shadow:0 18px 60px rgba(3,6,20,0.7)}
+
+/* Album art / disc */
+.disc{  margin-left:0;width:140px;height:140px;border-radius:12px;object-fit:cover;border:6px solid rgba(255,255,255,0.04);--disc-lift:3px;--disc-blur:40px;--disc-glow:36px;--disc-spread:8px;--disc-scale:1;--alpha-a:0.05;--alpha-b:0.03;--alpha-c:0.04;box-shadow: 0 var(--disc-lift) var(--disc-blur) rgba(6,9,20,0.6), 0 0 var(--disc-glow) var(--disc-spread) rgba(var(--accent-a),var(--alpha-a)), 0 0 calc(var(--disc-glow) * 1.2) calc(var(--disc-spread) * 1.0) rgba(var(--accent-b),var(--alpha-b)), 0 0 calc(var(--disc-glow) * 0.5) calc(var(--disc-spread) * 0.6) rgba(var(--accent-c),var(--alpha-c)); position:relative; overflow:hidden; flex-shrink:0;transition:transform .2s ease, box-shadow .12s linear}
+.disc.spin{animation:spin 2.9s linear infinite}
+.disc:hover{transform:translateY(-6px) rotate(-3deg)}
+
+/* Pulsing color overlay on top of the disc to make the gradient glow visible */
+.disc::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at 30% 30%, rgba(var(--accent-b),var(--alpha-b)) 0%, rgba(var(--accent-a),var(--alpha-a)) 45%, rgba(var(--accent-c),var(--alpha-c)) 100%);mix-blend-mode:screen;opacity:var(--disc-overlay-alpha,0);transform:scale(var(--disc-scale,1));transition:opacity .08s linear, transform .08s linear, background .12s linear;filter:blur(6px);}
+
+/* Music Info */
+.music-info{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  flex:0 1 auto;
+  padding-left:0;
+  align-items:center;
+  text-align:center;
+}  
+
+/* Title with masked marquee for overflow (matches .controls width) */
+.controls{ min-width:120px;max-width:360px;display:flex;flex-direction:column;gap:12px}
+.marquee-mask{width:auto;max-width:100%;display:inline-block;overflow:hidden;vertical-align:bottom;position:relative}
+.marquee-title{margin:0;font-size:18px;font-weight:700;color:var(--text);letter-spacing:.2px}
+.marquee-mask{width:240px;max-width:100%;display:inline-block;overflow:hidden;vertical-align:bottom;position:relative}
+.marquee-text{display:inline-block;white-space:nowrap;padding-right:12px;transform:translateX(0)}
+.marquee-text.marquee{
+  animation-name: marquee-alt;
+  animation-duration: var(--marquee-duration,8s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform;
+}
+/* Volume controls */
+.volume-row{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  margin-top:6px;
+  width:100%;
+  height:40px;
+}
+
+.volume-btn{
+  min-width:40px;
+  min-height:40px;
+  font-size:16px;
+  padding:6px;
+  flex-shrink:0;
+}
+
+.volume-slider-container{
+  height:40px;
+  width:0;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  opacity:0;
+  transition:width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  pointer-events:none;
+  flex-shrink:0;
+}
+
+.volume-slider-container.show{
+  width:140px;
+  opacity:1;
+  pointer-events:all;
+}
+
+/* Volume slider track */
+.volume-slider{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:8px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  outline:none;
+  border:1px solid rgba(255,255,255,0.04);
+  cursor:pointer;
+  position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* Webkit/Chrome slider thumb */
+.volume-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.78));
+  box-shadow:0 4px 12px rgba(0,0,0,0.35),0 0 12px rgba(125,95,255,0.08);
+  cursor:grab;
+  transition:transform .15s ease,box-shadow .15s ease;
+  position:relative;
+  z-index:2;
+}
+
+.volume-slider::-webkit-slider-thumb:hover{
+  transform:scale(1.2);
+  box-shadow:0 6px 16px rgba(0,0,0,0.45),0 0 18px rgba(125,95,255,0.12);
+}
+
+.volume-slider::-webkit-slider-thumb:active{
+  cursor:grabbing;
+  transform:scale(1.1);
+}
+
+/* Firefox slider thumb */
+.volume-slider::-moz-range-thumb{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.78));
+  box-shadow:0 4px 12px rgba(0,0,0,0.35),0 0 12px rgba(125,95,255,0.08);
+  cursor:grab;
+  border:none;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+
+.volume-slider::-moz-range-thumb:hover{
+  transform:scale(1.2);
+  box-shadow:0 6px 16px rgba(0,0,0,0.45),0 0 18px rgba(125,95,255,0.12);
+}
+
+.volume-slider::-moz-range-thumb:active{
+  cursor:grabbing;
+  transform:scale(1.1);
+}
+
+/* Focus state */
+.volume-slider:focus{
+  outline:2px solid rgba(125,95,255,0.3);
+  outline-offset:3px;
+}
+
+/* Firefox track */
+.volume-slider::-moz-range-track{
+  height:8px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);
+}
+
+/* Mobile adjustments for volume */
+@media (max-width:640px){
+  .volume-slider-container.show{
+    width:100px;
+  }
+}
+
+
+/* Modifier for one-direction left→right (data-direction="ltr") */
+.marquee-text.marquee.marquee-ltr{
+  animation-name: marquee-ltr;
+  animation-direction: normal;
+}
+
+@keyframes marquee-alt{from{transform:translateX(0)}to{transform:translateX(calc(-1 * var(--marquee-distance,0px)))}}
+@keyframes marquee-ltr{from{transform:translateX(calc(-1 * var(--marquee-distance,0px)))}to{transform:translateX(0)}}
+
+.marquee-mask:hover .marquee-text{animation-play-state:paused;cursor:default} 
+
+.music-info p{margin:0;font-size:13px;color:var(--muted)}
+
+/* Player inner row that groups the disc + info and stays centered */
+.player-row{display:flex;align-items:center;gap:40px;width:max-content;margin:0 auto}
+@media (max-width:640px){
+  .music-widget{
+    width:90vw;            
+    padding:16px 12px;     /* smaller padding on mobile */
+    gap:10px;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .disc{
+    width:80px;            /* smaller disc */
+    height:80px;
+  }
+
+  #play-inline{
+    width:48px;
+    height:48px;
+  }
+
+  /* Slightly shift music info 3px left and shrink width */
+  .music-info{
+    width:calc(100% - 24px);  /* fill card width minus padding */
+    max-width:200px;           /* smaller max width */
+    text-align:left;
+    margin-left:3px;           /* subtle left shift */
+    align-items:flex-start;
+  }
+
+  /* Stack controls vertically, fit inside music-info */
+  .controls{
+    width:100%;                
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px;
+    margin:0;
+  }
+
+  /* Progress bar fills controls width but smaller */
+  .progress{
+    width:100%;
+    height:8px;                /* thinner on mobile */
+    margin:0;
+  }
+
+  .progress-filled::after{
+    width:12px;
+    height:12px;               /* smaller progress knob */
+  }
+
+  /* Row for time + buttons */
+  .ctrl-row{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:6px;
+  }
+
+  /* Marquee text fits nicely */
+  .marquee-mask{
+    width:100%;
+    max-width:200px;           /* match music-info width */
+  }
+}
+
+
+
+@media (min-width:641px) and (max-width:1023px){
+  .player-row{gap:14px;width:max-content}
+  .music-widget{
+    justify-content:center;
+    padding:40px 56px;
+    width:min(680px,92vw);
+  }
+  .disc{width:120px;height:120px}
+  .music-info{align-items:flex-start;text-align:left;padding-left:6px}
+} 
+
+
+/* Controls */
+.controls{width: 240px; display:flex;flex-direction:column;gap:12px}
+.progress{height:10px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+.progress-filled{height:100%;width:0%;background:linear-gradient(90deg, rgba(var(--accent-a),0.95), rgba(var(--accent-b),0.95));border-radius:999px;transition:width .12s linear;position:relative}
+.progress-filled::after{content:'';position:absolute;right:0;top:50%;transform:translate(50%,-50%);width:14px;height:14px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,255,255,0.72));box-shadow:0 6px 18px rgba(0,0,0,0.5),0 0 20px rgba(var(--accent-a),0.12)}
+
+.ctrl-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.time{font-size:13px;color:var(--muted)}
+
+.ctrl-actions{display:flex;gap:12px;align-items:center}
+.small-btn{ box-shadow: 0 2px 6px rgba(0,0,0,0.2); background:linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:8px;border-radius:12px;color:var(--text);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:18px;min-width:44px;min-height:44px;transition:transform .12s ease,box-shadow .12s}
+.small-btn:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(2,6,23,0.45)}
+.small-btn:active{transform:scale(.98)}
+.small-btn:focus{outline:2px solid rgba(var(--accent-b),0.25);outline-offset:3px}
+
+#play-inline{width:60px;height:60px;border-radius:999px;background:linear-gradient(135deg, rgba(var(--accent-a),0.14), rgba(var(--accent-b),0.10));box-shadow:0 10px 30px rgba(12,18,36,0.6), 0 0 26px rgba(var(--accent-a),0.06);color:var(--text);border:1px solid rgba(255,255,255,0.04);font-size:20px}
+#play-inline.playing{box-shadow:0 12px 40px rgba(12,18,36,0.7), 0 0 36px rgba(var(--accent-b),0.14)}
+
+/* Spin animation */
+@keyframes spin{from{transform:rotate(0deg) scale(var(--disc-scale,1));}to{transform:rotate(360deg) scale(var(--disc-scale,1));}}
+
+/* small screens */
+@media (max-width:640px){
+  .music-widget{
+    width:90vw;
+    padding:18px;
+    gap:12px;
+    flex-direction:column;
+    align-items:center;
+  }
+  .disc{width:96px;height:96px}
+  #play-inline{width:52px;height:52px}
+  .controls{width:100%;display:flex;align-items:center;justify-content:center}
+  .marquee-mask{width:100%;max-width:100%}
+} 
+
+/* Accessibility tweaks for reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .orb--one,.orb--two{animation:none}
+  .disc{animation:none}
+  .music-widget,.disc{transition:none}
+}
+
+/* Larger screens — keep info left-aligned */
+@media (min-width:1024px){
+  .music-info{align-items:flex-start;text-align:left;padding-left:6px}
+}
+
+/* Decorative subtle lines inside the card */
+.music-widget::before{content:'';position:absolute;pointer-events:none;inset:auto 0 0 0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.02),transparent);border-radius:999px}
+
+/* Make sure everything sits above background */
+.music-container,*{z-index:10}
+
+
