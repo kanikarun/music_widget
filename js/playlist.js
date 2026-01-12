@@ -21,7 +21,10 @@ let searchQuery = '';
   const sortArtistBtn = document.getElementById('sort-artist');
   const sortOrderBtn = document.getElementById('sort-order');
   const searchInput = document.getElementById('playlist-search');
-  
+    const playBtn = document.getElementById('play-inline');
+    const playIcon = playBtn.querySelector('.play-icon');
+    const pauseIcon = playBtn.querySelector('.pause-icon');
+
 
   let isPlaylistOpen = false;
 
@@ -50,9 +53,23 @@ function updateSortButtonState() {
       sortOrder === 'asc' ? '⬆ A–Z' : '⬇ Z–A';
   }
 }
-
-
-
+playBtn.addEventListener('click', () => {
+  const isPlaying = playIcon.style.display !== 'none';
+  
+  if (isPlaying) {
+    // switch to pause
+    playIcon.style.display = 'none';
+    pauseIcon.style.display = 'inline';
+    // optional: play audio
+    window.playCurrent?.();
+  } else {
+    // switch to play
+    playIcon.style.display = 'inline';
+    pauseIcon.style.display = 'none';
+    // optional: pause audio
+    window.pauseCurrent?.();
+  }
+});
   // ===============================
   // SEARCH FILTER
   // ===============================

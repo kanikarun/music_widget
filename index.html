@@ -118,15 +118,36 @@
               <div class="progress-filled" id="progress"></div>
             </div>
 
-            <!-- Control buttons row -->
-            <div class="ctrl-row">
-              <span class="time">0:00</span>
-              <div class="ctrl-actions">
-                <button class="small-btn" id="prev">⏮</button>       <!-- Previous track -->
-                <button class="small-btn" id="play-inline">▶</button> <!-- Play/Pause -->
-                <button class="small-btn" id="next">⏭</button>       <!-- Next track -->
-              </div>
+          <!-- Control buttons row -->
+          <div class="ctrl-row">
+            <span class="time">0:00</span>
+            <div class="ctrl-actions">
+              <!-- Previous track -->
+              <button class="small-btn" id="prev" aria-label="Previous">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 6v12l8.5-6L6 6zm9 0v12h2V6h-2z"/>
+                </svg>
+              </button>
+
+              <!-- Play/Pause -->
+              <button class="small-btn" id="play-inline" aria-label="Play/Pause">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                  <path d="M8 5v14l11-7L8 5z"/>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" style="display:none;">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+              </button>
+
+              <!-- Next track -->
+              <button class="small-btn" id="next" aria-label="Next">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M4 6v12l8.5-6L4 6zm9 0v12h2V6h-2z"/>
+                </svg>
+              </button>
             </div>
+          </div>
+
 
             <!-- Volume control -->
             <div class="volume-row">
