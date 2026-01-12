@@ -410,6 +410,10 @@
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
+.sort-btn.active-order {
+  font-weight: bold;
+}
+
 /* Individual Sort Button */
 .sort-btn {
   padding: 6px 14px;

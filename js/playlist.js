@@ -46,13 +46,11 @@ function updateSortButtonState() {
   sortArtistBtn?.classList.toggle('active', sortMode === 'artist');
 
   if (sortOrderBtn) {
-    // Allow sorting by order for both title and artist
-    sortOrderBtn.disabled = false;
-    sortOrderBtn.style.opacity = '1';
     sortOrderBtn.textContent =
       sortOrder === 'asc' ? '⬆ A–Z' : '⬇ Z–A';
   }
 }
+
 
 
   // ===============================
@@ -69,65 +67,66 @@ function updateSortButtonState() {
   // ===============================
   // RENDER PLAYLIST
   // ===============================
-  function renderPlaylist() {
-    if (!playlistTracks || !window.tracks) return;
+function renderPlaylist() {
+  if (!playlistTracks || !window.tracks) return;
 
-    playlistTracks.innerHTML = '';
+  playlistTracks.innerHTML = '';
 
-    const currentTrackKey = getCurrentTrackKey();
+  const currentTrackKey = getCurrentTrackKey();
 
-    sortTracks();
+  // Sort tracks by current mode & order
+  sortTracks();
 
-    // ===== GROUP BY ARTIST =====
-    if (sortMode === 'artist') {
-      const grouped = groupTracksByArtist(window.tracks);
+  if (sortMode === 'artist') {
+    const grouped = groupTracksByArtist(window.tracks);
 
-      const sortedArtists = Object.keys(grouped).sort((a, b) => {
-        const r = a.localeCompare(b, undefined, { sensitivity: 'base' });
-        return sortOrder === 'asc' ? r : -r;
+    const sortedArtists = Object.keys(grouped).sort((a, b) => {
+      const r = a.localeCompare(b, undefined, { sensitivity: 'base' });
+      return sortOrder === 'asc' ? r : -r;
+    });
+
+    sortedArtists.forEach(artist => {
+      const header = document.createElement('div');
+      header.className = 'playlist-artist-header';
+      header.innerHTML = `
+        <span>${artist}</span>
+        <span>${collapsedArtists.has(artist) ? '▶' : '▼'}</span>
+      `;
+      header.addEventListener('click', (e) => {
+        e.stopPropagation();
+        collapsedArtists.has(artist)
+          ? collapsedArtists.delete(artist)
+          : collapsedArtists.add(artist);
+        renderPlaylist();
       });
 
-      sortedArtists.forEach(artist => {
-        const header = document.createElement('div');
-        header.className = 'playlist-artist-header';
-        header.innerHTML = `
-          <span>${artist}</span>
-          <span>${collapsedArtists.has(artist) ? '▶' : '▼'}</span>
-        `;
-        header.addEventListener('click', (e) => {
-          e.stopPropagation(); // 🔥 PREVENT playlist from closing
+      playlistTracks.appendChild(header);
 
-          collapsedArtists.has(artist)
-            ? collapsedArtists.delete(artist)
-            : collapsedArtists.add(artist);
+      if (collapsedArtists.has(artist)) return;
 
-          renderPlaylist();
-        });
-
-
-        playlistTracks.appendChild(header);
-
-        if (collapsedArtists.has(artist)) return;
-
-        grouped[artist]
-          .filter(matchesSearch)
-          .forEach(track => {
-            const index = window.tracks.indexOf(track);
-            createPlaylistItem(track, index);
-          });
-      });
-    }
-    // ===== TITLE MODE =====
-    else {
-      window.tracks
+      // Sort tracks inside each artist
+      grouped[artist]
+        .sort((a, b) => {
+          const r = a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+          return sortOrder === 'asc' ? r : -r;
+        })
         .filter(matchesSearch)
-        .forEach((track, index) => {
+        .forEach(track => {
+          const index = window.tracks.indexOf(track);
           createPlaylistItem(track, index);
         });
-    }
-
-    restoreCurrentIndex(currentTrackKey);
+    });
+  } else {
+    // TITLE MODE
+    window.tracks
+      .filter(matchesSearch)
+      .forEach((track, index) => {
+        createPlaylistItem(track, index);
+      });
   }
+
+  restoreCurrentIndex(currentTrackKey);
+}
 
   // ===============================
   // CREATE PLAYLIST ITEM
@@ -214,8 +213,10 @@ function updateSortButtonState() {
   sortOrderBtn?.addEventListener('click', () => {
     sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     savePreferences();
+    updateSortButtonState(); // 🔥 important
     renderPlaylist();
   });
+
 
 
   searchInput?.addEventListener('input', e => {
