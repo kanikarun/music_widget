@@ -395,19 +395,66 @@
 @keyframes spin{from{transform:rotate(0deg) scale(var(--disc-scale,1));}to{transform:rotate(360deg) scale(var(--disc-scale,1));}}
 
 /* small screens */
-@media (max-width:640px){
-  .music-widget{
-    width:90vw;
-    padding:18px;
-    gap:12px;
-    flex-direction:column;
-    align-items:center;
+/* Small screens (mobile, iPhone 12 included) */
+@media (max-width: 640px) {
+  .music-widget {
+    width: 90vw !important;
+    padding: 16px !important;
+    gap: 12px !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
-  .disc{width:96px;height:96px}
-  #play-inline{width:52px;height:52px}
-  .controls{width:100%;display:flex;align-items:center;justify-content:center}
-  .marquee-mask{width:100%;max-width:100%}
-} 
+
+  .disc {
+    width: 96px !important;
+    height: 96px !important;
+  }
+
+  #play-inline {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .music-info {
+    width: 100% !important;
+    max-width: 200px !important;
+    text-align: center !important;
+    align-items: center !important;
+    margin-left: 0 !important;
+  }
+
+  .controls {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .marquee-mask {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .volume-slider-container.show {
+    width: 100px !important;
+  }
+
+  .progress {
+    width: 100% !important;
+    height: 8px !important;
+  }
+
+  .progress-filled::after {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .ctrl-row {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+}
 
 /* Accessibility tweaks for reduced motion */
 @media (prefers-reduced-motion:reduce){
