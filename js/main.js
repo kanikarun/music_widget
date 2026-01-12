@@ -293,3 +293,30 @@ document.addEventListener("visibilitychange", () => {
 });
 
 
+// ===============================
+// GLASS CREDIT AUTO-HIDE
+// ===============================
+
+document.addEventListener('DOMContentLoaded', () => {
+  const credit = document.querySelector('.glass-credit');
+  if (!credit) return;
+
+  let hideTimer;
+
+  function showCredit() {
+    credit.style.opacity = '1';
+
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      credit.style.opacity = '0';
+    }, 3000);
+  }
+
+  // Show on user activity
+  ['mousemove', 'touchstart', 'scroll', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, showCredit, { passive: true });
+  });
+
+  // Initial show
+  showCredit();
+});
