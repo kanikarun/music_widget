@@ -1,148 +1,163 @@
-// Volume control functionality
+// ==========================
+// Volume Control Module (Cross-Platform)
+// ==========================
 const volumeSlider = document.getElementById('volume-slider');
 const volumeBtn = document.getElementById('volume-btn');
 const volumeSliderContainer = document.getElementById('volume-slider-container');
+const playBtn = document.getElementById('play-inline');
 
-let previousVolume = 0.7; // Default volume 70%
+let previousVolume = 0.7; // Default 70%
 let isVolumeVisible = false;
+let isVolumeEnabled = false; // Slider works only after user interaction
 
-// Get audio element (wait for it to be available)
+// Detect iOS devices
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
 function getAudio() {
   return document.getElementById('audio');
 }
 
-// Initialize volume when DOM is ready
+// --------------------------
+// Initialize volume
+// --------------------------
 function initVolume() {
   const audio = getAudio();
-  if (audio && volumeSlider) {
-    audio.volume = 0.7;
-    updateVolumeSliderFill();
-    updateVolumeIcon(0.7);
+  if (!audio) return;
+
+  if (!isIOS) {
+    audio.volume = previousVolume; // Only works on non-iOS
   }
-  
-  // Make sure slider is hidden on load
-  if (volumeSliderContainer) {
-    volumeSliderContainer.classList.remove('show');
-    isVolumeVisible = false;
-  }
+  audio.muted = false;
+
+  updateVolumeSliderFill();
+  updateVolumeIcon(previousVolume);
+
+  // Hide slider initially
+  if (volumeSliderContainer) volumeSliderContainer.classList.remove('show');
+  isVolumeVisible = false;
 }
 
+// --------------------------
 // Toggle volume slider visibility
+// --------------------------
 function toggleVolumeSlider() {
   isVolumeVisible = !isVolumeVisible;
-  
   if (volumeSliderContainer) {
-    if (isVolumeVisible) {
-      volumeSliderContainer.classList.add('show');
-    } else {
-      volumeSliderContainer.classList.remove('show');
-    }
+    volumeSliderContainer.classList.toggle('show', isVolumeVisible);
   }
 }
 
-// Hide volume slider when clicking outside
+// --------------------------
+// Hide slider if clicking outside
+// --------------------------
 function handleClickOutside(e) {
-  if (isVolumeVisible && volumeSliderContainer && volumeBtn) {
-    const isClickInsideSlider = volumeSliderContainer.contains(e.target);
-    const isClickOnButton = volumeBtn.contains(e.target);
-    
-    if (!isClickInsideSlider && !isClickOnButton) {
-      isVolumeVisible = false;
-      volumeSliderContainer.classList.remove('show');
-    }
+  if (!isVolumeVisible || !volumeSliderContainer || !volumeBtn) return;
+
+  if (!volumeSliderContainer.contains(e.target) && !volumeBtn.contains(e.target)) {
+    isVolumeVisible = false;
+    volumeSliderContainer.classList.remove('show');
   }
 }
 
-// Update volume icon based on current volume
+// --------------------------
+// Update volume icon
+// --------------------------
 function updateVolumeIcon(volume) {
   if (!volumeBtn) return;
-  
-  if (volume === 0) {
+
+  const audio = getAudio();
+  if (volume === 0 || (isIOS && audio.muted)) {
     volumeBtn.textContent = '🔇';
     volumeBtn.title = 'Unmute';
   } else if (volume < 0.3) {
     volumeBtn.textContent = '🔈';
-    volumeBtn.title = 'Toggle mute';
+    volumeBtn.title = 'Low volume';
   } else if (volume < 0.7) {
     volumeBtn.textContent = '🔉';
-    volumeBtn.title = 'Toggle mute';
+    volumeBtn.title = 'Medium volume';
   } else {
     volumeBtn.textContent = '🔊';
-    volumeBtn.title = 'Toggle mute';
+    volumeBtn.title = 'High volume';
   }
 }
 
-// Update volume slider visual fill
+// --------------------------
+// Update slider fill (gradient)
+// --------------------------
 function updateVolumeSliderFill() {
   const audio = getAudio();
   if (!volumeSlider || !audio) return;
-  
-  const percentage = audio.volume * 100;
-  
-  // Create gradient fill effect that matches your progress bar style
-  const gradient = `linear-gradient(90deg, 
-    rgba(125,95,255,0.95) 0%, 
-    rgba(0,210,255,0.95) ${percentage}%, 
-    rgba(255,255,255,0.02) ${percentage}%, 
-    rgba(255,255,255,0.01) 100%)`;
-  
-  volumeSlider.style.background = gradient;
+
+  let volumePercent = isIOS ? (audio.muted ? 0 : previousVolume * 100) : audio.volume * 100;
+
+  volumeSlider.style.background = `linear-gradient(90deg, rgba(125,95,255,0.95) 0%, rgba(0,210,255,0.95) ${volumePercent}%, rgba(255,255,255,0.02) ${volumePercent}%, rgba(255,255,255,0.01) 100%)`;
   volumeSlider.style.boxShadow = `inset 0 1px 0 rgba(255,255,255,0.02)`;
   volumeSlider.style.border = `1px solid rgba(255,255,255,0.04)`;
 }
 
-// Volume slider change - handles both click and drag
-if (volumeSlider) {
-  // Input event fires continuously while dragging
+// --------------------------
+// Set volume (handles iOS fallback)
+// --------------------------
+function setVolume(value) {
+  const audio = getAudio();
+  if (!audio) return;
+
+  if (isIOS) {
+    audio.muted = value === 0;
+    if (value > 0) previousVolume = value;
+  } else {
+    audio.volume = value;
+    if (value > 0) previousVolume = value;
+  }
+
+  updateVolumeIcon(value);
+  updateVolumeSliderFill();
+}
+
+// --------------------------
+// Enable volume control after user interaction
+// --------------------------
+function enableVolumeControl() {
+  if (isVolumeEnabled || !volumeSlider) return;
+  const audio = getAudio();
+  if (!audio) return;
+
+  isVolumeEnabled = true;
+
+  const updateFromSlider = (value) => {
+    setVolume(value);
+  };
+
+  // Desktop/mobile input
   volumeSlider.addEventListener('input', (e) => {
-    const audio = getAudio();
-    if (!audio) return;
-    
     const value = parseFloat(e.target.value) / 100;
-    audio.volume = value;
-    
-    if (value > 0) {
-      previousVolume = value;
-    }
-    
-    updateVolumeIcon(value);
-    updateVolumeSliderFill();
+    updateFromSlider(value);
   });
 
-  // Change event fires when releasing the slider
-  volumeSlider.addEventListener('change', (e) => {
-    const audio = getAudio();
-    if (!audio) return;
-    
-    const value = parseFloat(e.target.value) / 100;
-    audio.volume = value;
-    
-    if (value > 0) {
-      previousVolume = value;
-    }
-    
-    updateVolumeIcon(value);
-    updateVolumeSliderFill();
+  // Touch devices: smooth dragging
+  volumeSlider.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // prevent page scroll
+    const rect = volumeSlider.getBoundingClientRect();
+    const touch = e.touches[0];
+    let value = (touch.clientX - rect.left) / rect.width;
+    value = Math.max(0, Math.min(1, value));
+    updateFromSlider(value);
+    volumeSlider.value = value * 100;
   });
 
-  // Click directly on track
-  volumeSlider.addEventListener('click', (e) => {
-    const audio = getAudio();
-    if (!audio) return;
-    
-    const value = parseFloat(e.target.value) / 100;
-    audio.volume = value;
-    
-    if (value > 0) {
-      previousVolume = value;
-    }
-    
-    updateVolumeIcon(value);
-    updateVolumeSliderFill();
+  volumeSlider.addEventListener('touchend', (e) => {
+    const rect = volumeSlider.getBoundingClientRect();
+    const touch = e.changedTouches[0];
+    let value = (touch.clientX - rect.left) / rect.width;
+    value = Math.max(0, Math.min(1, value));
+    updateFromSlider(value);
+    volumeSlider.value = value * 100;
   });
 }
 
-// Volume button (toggle slider visibility)
+// --------------------------
+// Event listeners
+// --------------------------
 if (volumeBtn) {
   volumeBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -150,12 +165,22 @@ if (volumeBtn) {
   });
 }
 
-// Click outside to hide slider
 document.addEventListener('click', handleClickOutside);
 
-
-// Initialize on page load
+// Initialize volume on page load
 window.addEventListener('DOMContentLoaded', initVolume);
-
-// Also re-initialize when a track loads
 document.addEventListener('trackLoaded', initVolume);
+
+// Enable slider after first play (mobile-friendly)
+if (playBtn) {
+  playBtn.addEventListener('click', () => {
+    const audio = getAudio();
+    if (!audio) return;
+
+    audio.play().then(() => {
+      enableVolumeControl(); // slider now functional
+    }).catch((err) => {
+      console.log('Audio play prevented:', err);
+    });
+  });
+}
