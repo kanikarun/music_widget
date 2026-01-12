@@ -881,17 +881,31 @@ body{
 
 
 
-/* ---------- Playlist Header ---------- */
+/* ---------- Full Playlist Card ---------- */
+.playlist-overlay {
+  position: fixed;
+  top: 70px;
+  right: 16px;
+  width: 320px;
+  max-width: 100%;
+  background: rgba(255,255,255,0.03);
+  border-radius: 18px;
+  backdrop-filter: blur(16px) saturate(120%);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* gaps handled inside container */
+}
+
+/* ---------- Header ---------- */
 .playlist-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 18px 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
   background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  backdrop-filter: blur(12px) saturate(120%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .playlist-header h3 {
@@ -900,8 +914,10 @@ body{
   font-weight: 700;
   color: var(--text);
   letter-spacing: 0.3px;
+  transition: all 0.3s ease;
 }
 
+/* ---------- Close Button ---------- */
 .playlist-close {
   width: 32px;
   height: 32px;
@@ -909,7 +925,6 @@ body{
   align-items: center;
   justify-content: center;
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 8px;
   color: var(--text);
   font-size: 18px;
@@ -922,21 +937,68 @@ body{
   transform: rotate(90deg);
 }
 
-/* ---------- Playlist Tracks Container ---------- */
+/* ---------- Search + Sort ---------- */
+.playlist-search {
+  width: calc(100% - 20px);
+  margin: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.playlist-sort {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+}
+
+.sort-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.sort-btn.active {
+  background: linear-gradient(135deg, #6a5af9, #9b8cff);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  box-shadow: 0 6px 18px rgba(106,90,249,0.35);
+}
+
+/* ---------- Tracks Container ---------- */
 .playlist-tracks {
   display: flex;
   flex-direction: column;
-  gap: 12px;                  /* gap between groups or tracks */
-  max-height: calc(100vh - 240px);
+  gap: 12px;
+  max-height: calc(100vh - 260px);
   overflow-y: auto;
   padding: 12px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius: 0 0 16px 16px; /* rounded bottom corners */
-  backdrop-filter: blur(14px) saturate(120%);
-  box-shadow: inset 0 1px 3px rgba(255,255,255,0.03), 0 4px 16px rgba(0,0,0,0.3);
 }
 
-/* ---------- Artist Header (Collapsible Section) ---------- */
+/* Scrollbar */
+.playlist-tracks::-webkit-scrollbar {
+  width: 8px;
+}
+.playlist-tracks::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.02);
+  border-radius: 4px;
+}
+.playlist-tracks::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+
+/* ---------- Artist Headers (Collapsible) ---------- */
 .playlist-artist-header {
   display: flex;
   justify-content: space-between;
@@ -957,21 +1019,16 @@ body{
   background: rgba(255,255,255,0.08);
 }
 
-.playlist-artist-header span {
-  opacity: 0.7;
-  font-size: 12px;
-}
-
-/* Hide collapsed artists */
+/* Hide collapsed artist groups */
 .artist-collapsed + .artist-group {
   display: none;
 }
 
-/* ---------- Individual Tracks inside Artist Group ---------- */
+/* ---------- Tracks ---------- */
 .artist-group {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* gap between tracks within same artist */
+  gap: 8px;
 }
 
 .playlist-item {
@@ -993,6 +1050,17 @@ body{
   transform: translateX(-2px);
 }
 
+/* ---------- Active Track / Gradient Text ---------- */
+.playlist-item.active,
+.playlist-item.clicked span {
+  color: transparent;
+  background: linear-gradient(135deg, #6a5af9, #9b8cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Active bar */
 .playlist-item.active::before {
   content: '';
   position: absolute;
@@ -1005,6 +1073,7 @@ body{
   animation: pulse 1.2s infinite;
 }
 
+/* Pulse animation */
 @keyframes pulse {
   0% { opacity: 0.6; }
   50% { opacity: 1; }
