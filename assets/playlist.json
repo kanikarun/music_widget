@@ -45,7 +45,7 @@
     "title": "Hurt You  ",
     "artist": "The Weeknd ",
     "src": "assets/audio/The Weeknd - Hurt You feat. Gesaffelstein (Official Audio).mp4",
-    "cover": "assets/images/hurt you.jpg"
+    "cover": "assets/images/hurt.jpg"
   },
         {
     "title": "Deja Vu  ",
@@ -82,6 +82,36 @@
     "artist": "aespa(에스파)",
     "src": "assets/audio/Kill It.mp4",
     "cover": "assets/images/kill--it.jpg"
+  },
+    {
+    "title": "Right Now",
+    "artist": "Newjeans(뉴진스)",
+    "src": "assets/audio/NewJeans - 'Right Now' [Audio].mp4",
+    "cover": "assets/images/rightnow.jpg"
+  },
+  {
+    "title": "Seoul City",
+    "artist": "Jennie",
+    "src": "assets/audio/JENNIE - Seoul City (Official Lyric Video).mp4",
+    "cover": "assets/images/seoulcity.jpg"
+  },
+  {
+    "title": "Gala",
+    "artist": "XG",
+    "src": "assets/audio/Gala.mp4",
+    "cover": "assets/images/gala.jpg"
+  },
+  {
+    "title": "Something ain't right",
+    "artist": "XG",
+    "src": "assets/audio/sth_aint_right.mp4",
+    "cover": "assets/images/sth_aint_right.jpg"
+  },
+  {
+    "title": "Imaginary friend",
+    "artist": "ITZY",
+    "src": "aassets/audio/Imaginary Friend.mp4",
+    "cover": "assets/images/imaginary_friend.jpg"
   }
 
 ]
