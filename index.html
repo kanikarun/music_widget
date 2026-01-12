@@ -12,9 +12,15 @@
   <link rel="stylesheet" href="css/style.css">      <!-- Main global styles -->
   <link rel="stylesheet" href="css/overlay.css">    <!-- Styles for playlist overlay -->
   <link rel="stylesheet" href="css/widget.css">     <!-- Styles for music widget UI -->
+  <link rel="stylesheet" href="css/clock.css">      <!-- Styles for clock widget -->
 </head>
 <body>
 
+
+  <div class="clock-widget" id="clock">
+  <span id="clock-time">00:00:00</span>
+  <span id="clock-date">Monday, Jan 1</span>
+  </div>
   <!-- ================================
        3D Background Layer Section
        (Video removed, static image layers)
@@ -175,7 +181,8 @@
   ================================= -->
   <script src="js/main.js"></script>        <!-- Main player functionality -->
   <script src="js/volume.js"></script>      <!-- Volume control logic -->
-  <script src="js/playlist.js"></script>    <!-- Playlist logic -->
+  <script src="js/playlist.js"></script>     <!-- Playlist management -->
+  <script src="js/clock.js"></script>       <!-- Clock logic -->
 </body>
 <div class="glass-credit marquee">
   © Credit music, photos to all owners
