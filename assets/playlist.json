@@ -160,6 +160,114 @@
     "artist": "Lisa ft Tyla ",
     "src": "assets/audio/LISA_-_WHEN_I_M_WITH_YOU_feat._Tyla_Official_Music_Video_360P.mp4",
     "cover": "assets/images/wheniamwithyou.jpg"
+  },
+  {
+    "title": "Moonstruck",
+    "artist": "Enhypen",
+    "src": "assets/audio/ENHYPEN (엔하이픈) 'Moonstruck' Official Audio.mp4",
+    "cover": "assets/images/moonstruck.jpg"
+  },
+  {
+    "title": "Fatal Trouble",
+    "artist": "Enhypen",
+    "src": "assets/audio/Fatal Trouble.mp4",
+    "cover": "assets/images/fetal_trouble.jpg"
+  },
+  {
+    "title": "Flashover",
+    "artist": "Enhypen",
+    "src": "assets/audio/flashover.mp4",
+    "cover": "assets/images/flashover.jpg"
+  },
+  {
+    "title": "Fever",
+    "artist": "Enhypen",
+    "src": "assets/audio/FEVER.mp4",
+    "cover": "assets/images/Fever.jpg"
+  },
+  {
+    "title": "Bad Desire",
+    "artist": "Enhypen",
+    "src": "assets/audio/Baddesire.mp4",
+    "cover": "assets/images/Baddesire.jpg"
+  },
+  {
+    "title": "No Doubt",
+    "artist": "Enhypen",
+    "src": "assets/audio/No Doubt.mp4",
+    "cover": "assets/images/NoDoubt.jpg"
+  },
+  {
+    "title": "Brought The Heat Back",
+    "artist": "Enhypen",
+    "src": "assets/audio/Brought_The_Heat_Back_360P.mp4",
+    "cover": "assets/images/bring_the_heat_back.jpg"
+  },
+  {
+    "title": "Fate",
+    "artist": "Enhypen",
+    "src": "assets/audio/Fate_144P.mp4",
+    "cover": "assets/images/fate.jpg"
+  },
+  {
+    "title": "Let Me In",
+    "artist": "Enhypen",
+    "src": "assets/audio/Let Me In (20 CUBE).mp4",
+    "cover": "assets/images/Let_me_in.jpg"
+  },
+  {
+    "title": "Into Thhe I-LAND",
+    "artist": "Enhypen",
+    "src": "assets/audio/Into the I-LAND.mp4",
+    "cover": "assets/images/intotheiland.jpg"
+  }
+  ,{
+    "title": "Spark-(Winter)",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/spark_winter.mp4",
+    "cover": "assets/images/Spark.jpg"
+  },
+  {
+    "title": "Up-(Karina)",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/UP (KARINA Solo).mp4",
+    "cover": "assets/images/up.jpg"
+  },
+  { 
+    "title": "Bored-(Ningning)",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/bored.mp4",
+    "cover": "assets/images/bored.jpg"
+  }
+  ,{
+    "title": "Dopamine-(Giselle)",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/Dopamine (GISELLE Solo).mp4",
+    "cover": "assets/images/Dopamine.jpg"
+  },
+  {
+    "title": "Lucid Dream",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/자각몽 Lucid Dream.mp4",
+    "cover": "assets/images/lucid.jpg"
+  },
+  {
+    "title": "Thirsty",
+    "artist": "aespa(에스파)",
+    "src": "assets/audio/aespa 'Thirsty' (Official Audio).mp4",
+    "cover": "assets/images/thirsty.jpg"
+  },
+  {
+    "title": "Fabulous",
+    "artist": "TAEYEON(태연)",
+    "src": "assets/audio/Fabulous.mp4",
+    "cover": "assets/images/Fabulous.jpg"
+  },
+  {
+    "title": "Siren",
+    "artist": "TAEYEON(태연)",
+    "src": "assets/audio/Siren.mp4",
+    "cover": "assets/images/siren.jpg"
   }
 
 
