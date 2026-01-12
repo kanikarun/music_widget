@@ -1,4 +1,6 @@
-// Volume control functionality
+// ===============================
+// VOLUME CONTROL ELEMENTS
+// ===============================
 const volumeSlider = document.getElementById('volume-slider');
 const volumeBtn = document.getElementById('volume-btn');
 const volumeSliderContainer = document.getElementById('volume-slider-container');
@@ -6,12 +8,16 @@ const volumeSliderContainer = document.getElementById('volume-slider-container')
 let previousVolume = 0.7; // Default volume 70%
 let isVolumeVisible = false;
 
-// Get audio element (wait for it to be available)
+// ===============================
+// AUDIO ELEMENT HELPER
+// ===============================
 function getAudio() {
   return document.getElementById('audio');
 }
 
-// Initialize volume when DOM is ready
+// ===============================
+// INITIALIZATION
+// ===============================
 function initVolume() {
   const audio = getAudio();
   if (audio && volumeSlider) {
@@ -27,7 +33,15 @@ function initVolume() {
   }
 }
 
-// Toggle volume slider visibility
+// Initialize on page load
+window.addEventListener('DOMContentLoaded', initVolume);
+
+// Also re-initialize when a track loads
+document.addEventListener('trackLoaded', initVolume);
+
+// ===============================
+// SLIDER VISIBILITY
+// ===============================
 function toggleVolumeSlider() {
   isVolumeVisible = !isVolumeVisible;
   
@@ -40,7 +54,6 @@ function toggleVolumeSlider() {
   }
 }
 
-// Hide volume slider when clicking outside
 function handleClickOutside(e) {
   if (isVolumeVisible && volumeSliderContainer && volumeBtn) {
     const isClickInsideSlider = volumeSliderContainer.contains(e.target);
@@ -53,7 +66,20 @@ function handleClickOutside(e) {
   }
 }
 
-// Update volume icon based on current volume
+// Volume button (toggle slider visibility)
+if (volumeBtn) {
+  volumeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleVolumeSlider();
+  });
+}
+
+// Click outside to hide slider
+document.addEventListener('click', handleClickOutside);
+
+// ===============================
+// VOLUME ICON UPDATE
+// ===============================
 function updateVolumeIcon(volume) {
   if (!volumeBtn) return;
   
@@ -72,14 +98,15 @@ function updateVolumeIcon(volume) {
   }
 }
 
-// Update volume slider visual fill
+// ===============================
+// SLIDER VISUAL UPDATE
+// ===============================
 function updateVolumeSliderFill() {
   const audio = getAudio();
   if (!volumeSlider || !audio) return;
   
   const percentage = audio.volume * 100;
   
-  // Create gradient fill effect that matches your progress bar style
   const gradient = `linear-gradient(90deg, 
     rgba(125,95,255,0.95) 0%, 
     rgba(0,210,255,0.95) ${percentage}%, 
@@ -91,7 +118,9 @@ function updateVolumeSliderFill() {
   volumeSlider.style.border = `1px solid rgba(255,255,255,0.04)`;
 }
 
-// Volume slider change - handles both click and drag
+// ===============================
+// VOLUME SLIDER EVENTS
+// ===============================
 if (volumeSlider) {
   // Input event fires continuously while dragging
   volumeSlider.addEventListener('input', (e) => {
@@ -101,9 +130,7 @@ if (volumeSlider) {
     const value = parseFloat(e.target.value) / 100;
     audio.volume = value;
     
-    if (value > 0) {
-      previousVolume = value;
-    }
+    if (value > 0) previousVolume = value;
     
     updateVolumeIcon(value);
     updateVolumeSliderFill();
@@ -117,9 +144,7 @@ if (volumeSlider) {
     const value = parseFloat(e.target.value) / 100;
     audio.volume = value;
     
-    if (value > 0) {
-      previousVolume = value;
-    }
+    if (value > 0) previousVolume = value;
     
     updateVolumeIcon(value);
     updateVolumeSliderFill();
@@ -133,29 +158,9 @@ if (volumeSlider) {
     const value = parseFloat(e.target.value) / 100;
     audio.volume = value;
     
-    if (value > 0) {
-      previousVolume = value;
-    }
+    if (value > 0) previousVolume = value;
     
     updateVolumeIcon(value);
     updateVolumeSliderFill();
   });
 }
-
-// Volume button (toggle slider visibility)
-if (volumeBtn) {
-  volumeBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleVolumeSlider();
-  });
-}
-
-// Click outside to hide slider
-document.addEventListener('click', handleClickOutside);
-
-
-// Initialize on page load
-window.addEventListener('DOMContentLoaded', initVolume);
-
-// Also re-initialize when a track loads
-document.addEventListener('trackLoaded', initVolume);
