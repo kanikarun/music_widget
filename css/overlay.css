@@ -282,13 +282,42 @@
 /* Mobile Adjustments           */
 /* =========================== */
 @media (max-width: 640px) {
-  .playlist-toggle-btn { top: 16px; right: 16px; padding: 10px 16px; font-size: 13px; }
+  .playlist-toggle-btn {
+    top: 16px;
+    right: 16px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
   .playlist-icon { font-size: 16px; }
-  .playlist-overlay { top: 70px; right: 16px; width: calc(100vw - 32px); max-width: 340px; }
+
+  /* Overlay adjustments */
+  .playlist-overlay {
+    top: 64px; /* slightly lower to fit smaller header */
+    right: 16px;
+    width: calc(100vw - 32px);
+    max-width: 340px;
+    max-height: calc(100vh - 80px); /* smaller height to fit phone screens */
+    overflow-y: auto; /* allow scrolling if needed */
+  }
+
+  /* Playlist tracks adjustments */
+  .playlist-tracks {
+    max-height: calc(100vh - 200px); /* reduce height to fit within overlay */
+    padding: 8px;
+  }
+
+  /* Item adjustments */
   .playlist-item-cover { width: 48px; height: 48px; }
   .playlist-item-title { font-size: 13px; }
   .playlist-item-artist { font-size: 11px; }
-  .playlist-search { width: calc(100% - 32px); margin: 6px 16px 10px 16px; padding: 8px 12px; font-size: 13px; }
+
+  /* Search & sort adjustments */
+  .playlist-search {
+    width: calc(100% - 32px);
+    margin: 6px 16px 10px 16px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
   .playlist-sort { padding: 8px 16px; gap: 6px; }
   .sort-btn { padding: 4px 10px; font-size: 12px; }
 }
