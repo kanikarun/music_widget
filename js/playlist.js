@@ -54,8 +54,8 @@ function updateSortButtonState() {
   }
 }
 playBtn.addEventListener('click', () => {
-  const isPlaying = playIcon.style.display !== 'none';
-  
+  playBtn.classList.toggle('is-playing');
+});
   if (isPlaying) {
     // switch to pause
     playIcon.style.display = 'none';

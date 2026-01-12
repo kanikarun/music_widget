@@ -322,13 +322,16 @@
 #next svg {
   transform: translateX(1.5px);
 }
-#play-inline {
-  font-size: 0;          /* 🔥 kills emoji fallback */
-  line-height: 0;
+#play-inline .pause-icon {
+  display: none;
 }
 
-#play-inline svg {
-  font-size: initial;    /* restore svg size */
+#play-inline.is-playing .play-icon {
+  display: none;
+}
+
+#play-inline.is-playing .pause-icon {
+  display: block;
 }
 
 
