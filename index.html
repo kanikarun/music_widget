@@ -27,19 +27,42 @@
     <span class="playlist-text">Playlist</span>
   </button>
 
-  <!-- Playlist Overlay -->
-  <div class="playlist-overlay" id="playlist-overlay">
-    <div class="playlist-header">
-      <h3>Playlist</h3>
-      <button class="playlist-close" id="playlist-close">✕</button>
+<!-- Playlist Overlay -->
+<div class="playlist-overlay" id="playlist-overlay">
+
+  <!-- Header -->
+  <div class="playlist-header">
+    <h3>Playlist</h3>
+    <button class="playlist-close" id="playlist-close">✕</button>
+  </div>
+
+  <!-- Overlay content wrapper -->
+  <div class="playlist-overlay-content">
+
+    <!-- Sort buttons -->
+    <div class="playlist-sort">
+      <button id="sort-title" class="sort-btn active">Title</button>
+      <button id="sort-artist" class="sort-btn">Artist</button>
+      <button id="sort-order" class="sort-btn">⬆ A–Z</button>
     </div>
+
+        <!-- Search -->
+    <input
+      type="text"
+      id="playlist-search"
+      class="playlist-search"
+      placeholder="Search title or artist..."
+    />
+
+    <!-- Tracks -->
     <div class="playlist-tracks" id="playlist-tracks">
       <!-- Tracks will be dynamically inserted here -->
     </div>
+    
   </div>
+    </div>
 
-  <!-- Music Widget Container -->
-  <div class="music-container " id="music-container" >
+
   <!-- Music Widget Container -->
   <div class="music-container " id="music-container" >
     <!-- Widget -->

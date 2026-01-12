@@ -794,3 +794,219 @@ body{
     animation: none !important;
   }
 }
+
+/* ---------- Playlist Search & Sort ---------- */
+
+/* Sort Buttons Container */
+.playlist-sort {
+  display: flex;
+  gap: 8px;
+  padding: 12px 24px 8px 24px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Individual Sort Button */
+.sort-btn {
+  padding: 6px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  backdrop-filter: blur(6px) saturate(120%);
+}
+
+.sort-btn:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+}
+
+.sort-btn.active {
+  background: linear-gradient(135deg, rgba(var(--accent-a),0.12), rgba(var(--accent-b),0.08));
+  border-color: rgba(var(--accent-a),0.3);
+  box-shadow: 0 0 16px rgba(var(--accent-a),0.2);
+}
+
+/* Playlist Search Input */
+.playlist-search {
+  width: calc(100% - 48px);
+  margin: 8px 24px 12px 24px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  backdrop-filter: blur(8px) saturate(120%);
+  transition: all 0.18s ease;
+}
+
+.playlist-search::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.playlist-search:focus {
+  border-color: rgba(var(--accent-a),0.5);
+  box-shadow: 0 0 12px rgba(var(--accent-a),0.2);
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .playlist-sort {
+    padding: 8px 16px;
+    gap: 6px;
+  }
+
+  .sort-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  .playlist-search {
+    width: calc(100% - 32px);
+    margin: 6px 16px 10px 16px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+
+
+/* ---------- Playlist Header ---------- */
+.playlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  backdrop-filter: blur(12px) saturate(120%);
+}
+
+.playlist-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+
+.playlist-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.playlist-close:hover {
+  background: rgba(255,255,255,0.08);
+  transform: rotate(90deg);
+}
+
+/* ---------- Playlist Tracks Container ---------- */
+.playlist-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;                  /* gap between groups or tracks */
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 0 0 16px 16px; /* rounded bottom corners */
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.03), 0 4px 16px rgba(0,0,0,0.3);
+}
+
+/* ---------- Artist Header (Collapsible Section) ---------- */
+.playlist-artist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9b8cff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.playlist-artist-header:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.playlist-artist-header span {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+/* Hide collapsed artists */
+.artist-collapsed + .artist-group {
+  display: none;
+}
+
+/* ---------- Individual Tracks inside Artist Group ---------- */
+.artist-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* gap between tracks within same artist */
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.playlist-item:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateX(-2px);
+}
+
+.playlist-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #6a5af9, #9b8cff);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}

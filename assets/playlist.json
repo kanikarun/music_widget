@@ -8,7 +8,7 @@
   {
     "title": "Flowers",
     "artist": "aespa(에스파)",
-    "src": "assets/audio/aespa 에스파 'Flowers' (Official Audio).mp4",
+    "src": "assets/audio/aespa_flower.mp4",
     "cover": "assets/images/Flowers.jpg"
   },
   {
@@ -74,7 +74,7 @@
   {
     "title": "Mine",
     "artist": "aespa(에스파)",
-    "src": "assets/audio/aespa 'Mine' (Official Audio).mp4",
+    "src": "assets/audio/aespa_mine.mp4",
     "cover": "assets/images/mine.jpg"
   },
   {
