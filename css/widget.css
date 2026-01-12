@@ -397,38 +397,22 @@
 /* small screens */
 /* Small screens (mobile, iPhone 12 included) */
 @media (max-width: 640px) {
-  .music-widget {
-    width: 90vw !important;
-    padding: 16px !important;
-    gap: 12px !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .disc {
-    width: 96px !important;
-    height: 96px !important;
-  }
-
-  #play-inline {
-    width: 52px !important;
-    height: 52px !important;
-  }
-
   .music-info {
     width: 100% !important;
-    max-width: 200px !important;
-    text-align: center !important;
-    align-items: center !important;
+    max-width: 260px !important;          /* bigger than before */
+    text-align: left !important;          /* align text to start */
+    align-items: flex-start !important;   /* align children to start */
     margin-left: 0 !important;
+    padding-left: 0 !important;
   }
 
   .controls {
     width: 100% !important;
     display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    flex-direction: column !important;    /* stack title + progress + buttons */
+    align-items: flex-start !important;   /* align children to start */
     gap: 6px !important;
+    margin: 0 !important;
   }
 
   .marquee-mask {
@@ -436,8 +420,12 @@
     max-width: 100% !important;
   }
 
-  .volume-slider-container.show {
-    width: 100px !important;
+  /* Time above progress, left-aligned */
+  .ctrl-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    width: 100% !important;
   }
 
   .progress {
@@ -450,9 +438,137 @@
     height: 12px !important;
   }
 
+  /* Shrink and left-align play/pause, next, prev buttons */
+  .ctrl-actions {
+    display: flex !important;
+    gap: 20px !important;                  /* corrected double px typo */
+    justify-content: flex-start !important; /* align buttons left */
+    width: 100% !important;
+  }
+
+  .small-btn, #play-inline {
+    width: 44px !important;               /* slightly bigger buttons */
+    height: 44px !important;
+    font-size: 17px !important;
+  }
+
+  #prev, #next {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+
+
+
+/* Tablet: Mini Air portrait (820px) */
+@media (min-width: 641px) and (max-width: 820px) {
+  .player-row {
+    left: -40px !important; /* adjust for portrait */
+    flex-direction: row !important; /* disc left, info right */
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+
+  .disc {
+    left: -40px !important; /* adjust for portrait */
+    bottom: -30px;
+    width: 120px !important;
+    height: 120px !important;
+    flex-shrink: 0;
+  }
+
+.music-info {
+  max-width: 380px !important;
+  flex-grow: 1 !important;
+  padding: 10px 0 !important;  /* inside gap */
+}
+
+.controls {
+  width: 100% !important;
+  gap: 8px !important;
+  margin-top: 8px !important;  /* ensures progress bar stays visible */
+}
+
+
   .ctrl-row {
-    flex-direction: column !important;
-    gap: 6px !important;
+  
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 20px !important;
+    width: 100% !important;
+  }
+
+  .ctrl-actions {
+    gap: 12px !important;
+    
+  }
+
+  .small-btn, #play-inline {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  #prev, #next {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .marquee-mask {
+    max-width: 100% !important;
+  }
+}
+
+/* Tablet: iPad Pro portrait (1024px) */
+@media (min-width: 821px) and (max-width: 1024px) {
+  .player-row {
+  
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 24px !important;
+  }
+
+  .disc {
+    left: -50px !important; /* adjust for portrait */
+    bottom: -10px;
+    width: 140px !important;
+    height: 140px !important;
+    flex-shrink: 0;
+  }
+
+  .music-info {
+    max-width: 480px !important; /* wider info area */
+    flex-grow: 1 !important;
+  }
+
+  .controls {
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .ctrl-row {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .ctrl-actions {
+    gap: 16px !important;
+  }
+
+  .small-btn, #play-inline {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  #prev, #next {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .marquee-mask {
+    max-width: 100% !important;
   }
 }
 
