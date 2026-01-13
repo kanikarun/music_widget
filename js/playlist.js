@@ -1,5 +1,5 @@
 // ===============================
-// PLAYLIST MODULE WITH FULL QUEUE SYNC AND BACKGROUND SUPPORT
+// PLAYLIST MODULE WITH BACKGROUND SUPPORT
 // ===============================
 (function () {
   const playlistToggle = document.getElementById('playlist-toggle');
@@ -27,11 +27,16 @@
   const collapsedArtists = new Set();
   let searchQuery = '';
 
-  // Playback queue and current index
+  // 🔹 Playback queue
   let playQueue = [];
   let queueIndex = 0;
-  let userHasInteracted = false;
+  // 🔹 iOS unlock for background audio
+    let userHasInteracted = false;
 
+    // mark first interaction
+    playBtn?.addEventListener('click', () => {
+      userHasInteracted = true;
+    });
   // ===============================
   // PLAY/PAUSE ICONS
   // ===============================
@@ -48,21 +53,14 @@
   audio.addEventListener('pause', () => updatePlayPauseIcons(false));
 
   // ===============================
-  // USER INTERACTION INIT (iOS)
-  // ===============================
-  playBtn?.addEventListener('click', () => {
-    userHasInteracted = true;
-    audio.play().catch(()=>{});
-  });
-
-  // ===============================
-  // PLAYLIST TOGGLE
+  // PLAYLIST VISIBILITY
   // ===============================
   function togglePlaylist() {
     isPlaylistOpen = !isPlaylistOpen;
     playlistOverlay.classList.toggle('show', isPlaylistOpen);
     if (isPlaylistOpen) renderPlaylist();
   }
+
   function closePlaylist() {
     isPlaylistOpen = false;
     playlistOverlay.classList.remove('show');
@@ -84,6 +82,7 @@
     if (!searchQuery) return true;
     return track.title.toLowerCase().includes(searchQuery) || track.artist.toLowerCase().includes(searchQuery);
   }
+
   searchInput?.addEventListener('input', e => {
     searchQuery = e.target.value.toLowerCase();
     renderPlaylist();
@@ -108,44 +107,39 @@
   }
 
   // ===============================
-  // PLAY/PAUSE & NEXT/PREV HANDLERS
+  // TRACK NAVIGATION
   // ===============================
-  function playNextTrack() {
-    if (!playQueue.length) return;
-    if (queueIndex < 0 || queueIndex >= playQueue.length) {
-      queueIndex = playQueue.indexOf(window.currentIndex);
-      if (queueIndex < 0) queueIndex = 0;
+    function playNextTrack() {
+      if (!playQueue.length) return;
+
+      // Only block on iOS Safari if user hasn't interacted
+      const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
+      if (isIOS && !userHasInteracted) return; // wait for first tap
+
+      queueIndex = (queueIndex + 1) % playQueue.length;
+      window.currentIndex = playQueue[queueIndex];
+      window.loadTrack(window.currentIndex);
+      audio.play().catch(() => {});
+      updateActiveTrack();
+      updateMediaSession(window.tracks[window.currentIndex]);
     }
-    queueIndex = (queueIndex + 1) % playQueue.length;
-    window.currentIndex = playQueue[queueIndex];
-    window.loadTrack(window.currentIndex);
-    if (userHasInteracted) audio.play().catch(()=>{});
-    updateActiveTrack();
-    updateMediaSession(window.tracks[window.currentIndex]);
-  }
 
-  function playPrevTrack() {
-    if (!playQueue.length) return;
-    if (queueIndex < 0 || queueIndex >= playQueue.length) {
-      queueIndex = playQueue.indexOf(window.currentIndex);
-      if (queueIndex < 0) queueIndex = 0;
+    function playPrevTrack() {
+      if (!playQueue.length) return;
+
+      const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
+      if (isIOS && !userHasInteracted) return;
+
+      queueIndex = (queueIndex - 1 + playQueue.length) % playQueue.length;
+      window.currentIndex = playQueue[queueIndex];
+      window.loadTrack(window.currentIndex);
+      audio.play().catch(() => {});
+      updateActiveTrack();
+      updateMediaSession(window.tracks[window.currentIndex]);
     }
-    queueIndex = (queueIndex - 1 + playQueue.length) % playQueue.length;
-    window.currentIndex = playQueue[queueIndex];
-    window.loadTrack(window.currentIndex);
-    if (userHasInteracted) audio.play().catch(()=>{});
-    updateActiveTrack();
-    updateMediaSession(window.tracks[window.currentIndex]);
-  }
 
-  // Attach buttons for click + touch
-  [nextBtn, prevBtn].forEach((btn, idx) => {
-    if (!btn) return;
-    const handler = idx === 0 ? playNextTrack : playPrevTrack;
-    btn.addEventListener('click', handler);
-    btn.addEventListener('touchend', e => { e.preventDefault(); handler(); });
-  });
-
+  nextBtn?.addEventListener('click', playNextTrack);
+  prevBtn?.addEventListener('click', playPrevTrack);
   audio?.addEventListener('ended', playNextTrack);
 
   // ===============================
@@ -158,48 +152,47 @@
       title: track.title,
       artist: track.artist,
       album: track.album || 'Music Widget',
-      artwork: [
-        { src: track.cover, sizes: '96x96', type: 'image/jpeg' },
-        { src: track.cover, sizes: '512x512', type: 'image/jpeg' }
-      ]
+      artwork: [{ src: track.cover, sizes: '96x96', type: 'image/jpeg' }]
     });
 
     navigator.mediaSession.setActionHandler('previoustrack', playPrevTrack);
     navigator.mediaSession.setActionHandler('nexttrack', playNextTrack);
     navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-    navigator.mediaSession.setActionHandler('play', () => {
-      if (userHasInteracted) audio.play().catch(()=>{});
-    });
+    navigator.mediaSession.setActionHandler('play', () => audio.play());
   }
 
   // ===============================
   // LOAD TRACK
   // ===============================
-  window.loadTrack = function(index) {
-    const track = window.tracks[index];
-    if (!track) return;
+window.loadTrack = function(index) {
+  const track = window.tracks[index];
+  if (!track) return;
 
-    window.currentIndex = index;
-    audio.src = track.src;
+  window.currentIndex = index;
+  audio.src = track.src;
 
-    titleEl.textContent = track.title;
-    artistEl.textContent = track.artist;
+  // Update title & artist
+  titleEl.textContent = track.title;
+  artistEl.textContent = track.artist;
 
-    const bgEl = document.querySelector('.bg-image');
-    if (bgEl && track.cover) bgEl.style.backgroundImage = `url('${track.cover}')`;
+  // Update background
+  const bgEl = document.querySelector('.bg-image');
+  if (bgEl && track.cover) bgEl.style.backgroundImage = `url('${track.cover}')`;
 
-    if (disc && track.cover) {
-      disc.src = track.cover;
-      disc.classList.add('spin');
-      disc.style.animationPlayState = audio.paused ? 'paused' : 'running';
-    }
+  // 🔹 Update spinning disc
+  if (disc && track.cover) {
+    disc.src = track.cover;  // update the <img> source directly
+    disc.classList.add('spin');
+    disc.style.animationPlayState = audio.paused ? 'paused' : 'running';
+  }
 
-    updateActiveTrack();
-    updateMediaSession(track);
-  };
+
+  // Update playlist active item & artist header
+  updateActiveTrack();
+};
 
   // ===============================
-  // ACTIVE TRACK HIGHLIGHT
+  // UPDATE ACTIVE TRACK
   // ===============================
   function updateActiveTrack() {
     playlistTracks.querySelectorAll('.playlist-item').forEach(item => {
@@ -208,7 +201,8 @@
 
     const active = playlistTracks.querySelector('.playlist-item.active');
     active?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    updateActiveArtistHeader();
+
+    updateActiveArtistHeader(); // 🔹 immediately highlight artist header
   }
 
   function updateActiveArtistHeader() {
@@ -221,7 +215,7 @@
   }
 
   // ===============================
-  // RENDER PLAYLIST
+  // PLAYLIST RENDERING
   // ===============================
   function renderPlaylist() {
     if (!playlistTracks || !window.tracks) return;
@@ -242,6 +236,7 @@
             .sort((a, b) => sortOrder === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
           if (!matchingTracks.length) return;
 
+          // Artist header
           const header = document.createElement('div');
           header.className = 'playlist-artist-header';
           if (artist === currentArtist) header.classList.add('active');
@@ -271,6 +266,7 @@
         });
     }
 
+    // 🔹 update playQueue to current rendered order
     playQueue = renderedIndices;
     queueIndex = playQueue.indexOf(window.currentIndex ?? 0);
 
@@ -290,10 +286,11 @@
       </div>
     `;
 
+    // 🔹 clicking track plays immediately and updates headers
     item.addEventListener('click', () => {
       queueIndex = playQueue.indexOf(index);
-      window.loadTrack(index);
-      if (userHasInteracted) audio.play().catch(()=>{});
+      window.loadTrack(index);       // 🔹 loadTrack updates UI immediately
+      audio.play().catch(() => {});
       updateMediaSession(window.tracks[index]);
     });
 
@@ -338,6 +335,7 @@
     if (window.currentIndex != null) updateMediaSession(window.tracks[window.currentIndex]);
     updatePlayPauseIcons(!audio.paused);
 
+    // initialize full playlist queue
     playQueue = window.tracks.map((_, i) => i);
     queueIndex = window.currentIndex || 0;
   }
