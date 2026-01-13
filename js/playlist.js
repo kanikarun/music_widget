@@ -105,10 +105,8 @@
   // ===============================
   function playNextTrack() {
     if (!playQueue.length) return;
-
     queueIndex = (queueIndex + 1) % playQueue.length;
     window.currentIndex = playQueue[queueIndex];
-
     window.loadTrack(window.currentIndex);
     audio.play().catch(() => {});
     updateActiveTrack();
@@ -117,10 +115,8 @@
 
   function playPrevTrack() {
     if (!playQueue.length) return;
-
     queueIndex = (queueIndex - 1 + playQueue.length) % playQueue.length;
     window.currentIndex = playQueue[queueIndex];
-
     window.loadTrack(window.currentIndex);
     audio.play().catch(() => {});
     updateActiveTrack();
@@ -151,68 +147,122 @@
   }
 
   // ===============================
-  // PLAYLIST RENDERING
+  // LOAD TRACK
   // ===============================
-function renderPlaylist() {
-  if (!playlistTracks || !window.tracks) return;
-  playlistTracks.innerHTML = '';
+window.loadTrack = function(index) {
+  const track = window.tracks[index];
+  if (!track) return;
 
-  const currentTrackKey = getCurrentTrackKey();
-  sortTracks();
+  window.currentIndex = index;
+  audio.src = track.src;
 
-  let renderedIndices = [];
-  let currentArtist = window.currentIndex != null ? window.tracks[window.currentIndex].artist : null;
+  // Update title & artist
+  titleEl.textContent = track.title;
+  artistEl.textContent = track.artist;
 
-  if (sortMode === 'artist') {
-    const tracksByArtist = groupTracksByArtist(window.tracks);
-    Object.keys(tracksByArtist)
-      .sort((a,b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a))
-      .forEach(artist => {
-        const matchingTracks = tracksByArtist[artist].filter(matchesSearch)
-          .sort((a,b) => sortOrder==='asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
-        if (!matchingTracks.length) return;
+  // Update background
+  const bgEl = document.querySelector('.bg-image');
+  if (bgEl && track.cover) bgEl.style.backgroundImage = `url('${track.cover}')`;
 
-        const header = document.createElement('div');
-        header.className = 'playlist-artist-header';
-        if (artist === currentArtist) header.classList.add('active'); // 🔹 highlight active artist
-        header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist)?'▶':'▼'}</span>`;
-
-        header.addEventListener('click', e => {
-          e.stopPropagation();
-          collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);
-          renderPlaylist();
-        });
-
-        playlistTracks.appendChild(header);
-        if (collapsedArtists.has(artist)) return;
-
-        matchingTracks.forEach(track => {
-          const trackIndex = window.tracks.indexOf(track);
-          renderedIndices.push(trackIndex);
-          createPlaylistItem(track, trackIndex);
-        });
-      });
-  } else {
-    window.tracks
-      .map((track,i)=>({track,originalIndex:i}))
-      .filter(({track})=>matchesSearch(track))
-      .forEach(({track,originalIndex}) => {
-        renderedIndices.push(originalIndex);
-        createPlaylistItem(track, originalIndex);
-      });
+  // 🔹 Update spinning disc
+  if (disc && track.cover) {
+    disc.src = track.cover;  // update the <img> source directly
+    disc.classList.add('spin');
+    disc.style.animationPlayState = audio.paused ? 'paused' : 'running';
   }
 
-  playQueue = renderedIndices;
-  queueIndex = playQueue.indexOf(window.currentIndex ?? 0);
 
-  restoreCurrentIndex(currentTrackKey);
-}
+  // Update playlist active item & artist header
+  updateActiveTrack();
+};
 
-  function createPlaylistItem(track,index){
+  // ===============================
+  // UPDATE ACTIVE TRACK
+  // ===============================
+  function updateActiveTrack() {
+    playlistTracks.querySelectorAll('.playlist-item').forEach(item => {
+      item.classList.toggle('active', Number(item.dataset.index) === window.currentIndex);
+    });
+
+    const active = playlistTracks.querySelector('.playlist-item.active');
+    active?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    updateActiveArtistHeader(); // 🔹 immediately highlight artist header
+  }
+
+  function updateActiveArtistHeader() {
+    if (!playlistTracks) return;
+    const currentArtist = window.currentIndex != null ? window.tracks[window.currentIndex].artist : null;
+    playlistTracks.querySelectorAll('.playlist-artist-header').forEach(header => {
+      const artistName = header.querySelector('span:first-child')?.textContent;
+      header.classList.toggle('active', artistName === currentArtist);
+    });
+  }
+
+  // ===============================
+  // PLAYLIST RENDERING
+  // ===============================
+  function renderPlaylist() {
+    if (!playlistTracks || !window.tracks) return;
+    playlistTracks.innerHTML = '';
+
+    const currentTrackKey = getCurrentTrackKey();
+    sortTracks();
+
+    let renderedIndices = [];
+    let currentArtist = window.currentIndex != null ? window.tracks[window.currentIndex].artist : null;
+
+    if (sortMode === 'artist') {
+      const tracksByArtist = groupTracksByArtist(window.tracks);
+      Object.keys(tracksByArtist)
+        .sort((a, b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a))
+        .forEach(artist => {
+          const matchingTracks = tracksByArtist[artist].filter(matchesSearch)
+            .sort((a, b) => sortOrder === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
+          if (!matchingTracks.length) return;
+
+          // Artist header
+          const header = document.createElement('div');
+          header.className = 'playlist-artist-header';
+          if (artist === currentArtist) header.classList.add('active');
+          header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist) ? '▶' : '▼'}</span>`;
+          header.addEventListener('click', e => {
+            e.stopPropagation();
+            collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);
+            renderPlaylist();
+          });
+
+          playlistTracks.appendChild(header);
+          if (collapsedArtists.has(artist)) return;
+
+          matchingTracks.forEach(track => {
+            const trackIndex = window.tracks.indexOf(track);
+            renderedIndices.push(trackIndex);
+            createPlaylistItem(track, trackIndex);
+          });
+        });
+    } else {
+      window.tracks
+        .map((track, i) => ({ track, originalIndex: i }))
+        .filter(({ track }) => matchesSearch(track))
+        .forEach(({ track, originalIndex }) => {
+          renderedIndices.push(originalIndex);
+          createPlaylistItem(track, originalIndex);
+        });
+    }
+
+    // 🔹 update playQueue to current rendered order
+    playQueue = renderedIndices;
+    queueIndex = playQueue.indexOf(window.currentIndex ?? 0);
+
+    restoreCurrentIndex(currentTrackKey);
+  }
+
+  function createPlaylistItem(track, index) {
     const item = document.createElement('div');
     item.className = 'playlist-item';
     item.dataset.index = index;
-    if (index===window.currentIndex) item.classList.add('active');
+    if (index === window.currentIndex) item.classList.add('active');
     item.innerHTML = `
       <img src="${track.cover}" class="playlist-item-cover"/>
       <div class="playlist-item-info">
@@ -221,25 +271,15 @@ function renderPlaylist() {
       </div>
     `;
 
-    // 🔹 Clicking track plays immediately in the current order
+    // 🔹 clicking track plays immediately and updates headers
     item.addEventListener('click', () => {
       queueIndex = playQueue.indexOf(index);
-      window.currentIndex = index;
-      window.loadTrack(index);
+      window.loadTrack(index);       // 🔹 loadTrack updates UI immediately
       audio.play().catch(() => {});
-      updateActiveTrack();
       updateMediaSession(window.tracks[index]);
     });
 
     playlistTracks.appendChild(item);
-  }
-
-  function updateActiveTrack(){
-    playlistTracks.querySelectorAll('.playlist-item').forEach(item=>{
-      item.classList.toggle('active', Number(item.dataset.index)===window.currentIndex);
-    });
-    const active = playlistTracks.querySelector('.playlist-item.active');
-    active?.scrollIntoView({behavior:'smooth', block:'nearest'});
   }
 
   function getCurrentTrackKey() {
@@ -248,39 +288,43 @@ function renderPlaylist() {
     return `${t.title}__${t.artist}`;
   }
 
-  function restoreCurrentIndex(key){
+  function restoreCurrentIndex(key) {
     if (!key) return;
-    const i = window.tracks.findIndex(t=>`${t.title}__${t.artist}`===key);
-    if(i!==-1) window.currentIndex=i;
+    const i = window.tracks.findIndex(t => `${t.title}__${t.artist}` === key);
+    if (i !== -1) window.currentIndex = i;
   }
 
-  function sortTracks(){
+  function sortTracks() {
     const key = getCurrentTrackKey();
-    window.tracks.sort((a,b)=>{
-      const A = sortMode==='artist'?a.artist:a.title;
-      const B = sortMode==='artist'?b.artist:b.title;
-      return sortOrder==='asc'? A.localeCompare(B) : B.localeCompare(A);
+    window.tracks.sort((a, b) => {
+      const A = sortMode === 'artist' ? a.artist : a.title;
+      const B = sortMode === 'artist' ? b.artist : b.title;
+      return sortOrder === 'asc' ? A.localeCompare(B) : B.localeCompare(A);
     });
     restoreCurrentIndex(key);
   }
 
-  function groupTracksByArtist(tracks){
-    return tracks.reduce((acc,t)=>(acc[t.artist] ||= []).push(t)&&acc,{});
+  function groupTracksByArtist(tracks) {
+    return tracks.reduce((acc, t) => (acc[t.artist] ||= []).push(t) && acc, {});
   }
 
-  function initPlaylist(){
-    if(!window.tracks?.length) return;
+  // ===============================
+  // INITIALIZE PLAYLIST
+  // ===============================
+  function initPlaylist() {
+    if (!window.tracks?.length) return;
 
     updateSortButtonState();
     renderPlaylist();
 
-    if(window.currentIndex != null) updateMediaSession(window.tracks[window.currentIndex]);
+    if (window.currentIndex != null) updateMediaSession(window.tracks[window.currentIndex]);
     updatePlayPauseIcons(!audio.paused);
 
     // initialize full playlist queue
-    playQueue = window.tracks.map((_,i)=>i);
+    playQueue = window.tracks.map((_, i) => i);
     queueIndex = window.currentIndex || 0;
   }
 
-  window.tracks ? initPlaylist() : document.addEventListener('DOMContentLoaded', ()=>setTimeout(initPlaylist,100));
+  window.tracks ? initPlaylist() : document.addEventListener('DOMContentLoaded', () => setTimeout(initPlaylist, 100));
+
 })();
