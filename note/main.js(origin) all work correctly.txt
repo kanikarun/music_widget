@@ -1,3 +1,5 @@
+main.js(origin) all work correctly just not support bg music
+
 const button = document.getElementById('play-button');
 const inlinePlay = document.getElementById('play-inline');
 const prevBtn = document.getElementById('prev');
@@ -186,22 +188,10 @@ function updateTitleMarquee() {
 window.addEventListener('resize', updateTitleMarquee);
 
 function loadTrack(index) {
-  const nextIndex = (index + tracks.length) % tracks.length;
-  const t = tracks[nextIndex];
+  currentIndex = (index + tracks.length) % tracks.length;
+  const t = tracks[currentIndex];
   if (!t) return;
-
-  // 🚫 Prevent reload of same track
-  if (audio.src && audio.src.includes(t.src)) {
-    currentIndex = nextIndex;
-    return;
-  }
-
-  currentIndex = nextIndex;
-
-  audio.pause();          // stop current play safely
-  audio.src = t.src;      // change source
-  audio.load();           // explicit load
-
+  audio.src = t.src;
   if (disc) disc.src = t.cover;
   setBackgroundCover(t.cover);
   // Place title text into the marquee span (keeps markup intact)
@@ -219,12 +209,9 @@ function loadTrack(index) {
   isPlaying = false;
   updatePlayUI(false);
 }
+
 function playCurrent() {
-  audio.play().catch(err => {
-    if (err.name !== 'AbortError') {
-      console.error(err);
-    }
-  });
+  audio.play();
   isPlaying = true;
   updatePlayUI(true);
 }
@@ -238,7 +225,6 @@ function togglePlay() {
     updatePlayUI(false);
   }
 }
-
 
 // Attach listeners
 if (inlinePlay) inlinePlay.addEventListener('click', togglePlay);

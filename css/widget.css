@@ -48,6 +48,7 @@
 .music-widget:hover{transform:translateY(-8px);box-shadow:0 18px 60px rgba(3,6,20,0.7)}
 
 /* Album art / disc */
+
 .disc{  margin-left:0;width:140px;height:140px;border-radius:12px;object-fit:cover;border:6px solid rgba(255,255,255,0.04);--disc-lift:3px;--disc-blur:40px;--disc-glow:36px;--disc-spread:8px;--disc-scale:1;--alpha-a:0.05;--alpha-b:0.03;--alpha-c:0.04;box-shadow: 0 var(--disc-lift) var(--disc-blur) rgba(6,9,20,0.6), 0 0 var(--disc-glow) var(--disc-spread) rgba(var(--accent-a),var(--alpha-a)), 0 0 calc(var(--disc-glow) * 1.2) calc(var(--disc-spread) * 1.0) rgba(var(--accent-b),var(--alpha-b)), 0 0 calc(var(--disc-glow) * 0.5) calc(var(--disc-spread) * 0.6) rgba(var(--accent-c),var(--alpha-c)); position:relative; overflow:hidden; flex-shrink:0;transition:transform .2s ease, box-shadow .12s linear}
 .disc.spin{animation:spin 2.9s linear infinite}
 .disc:hover{transform:translateY(-6px) rotate(-3deg)}
