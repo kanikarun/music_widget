@@ -30,8 +30,18 @@
   // 🔹 Playback queue
   let playQueue = [];
   let queueIndex = 0;
-  // 🔹 iOS unlock for background audio
+
+    // 🔹 detect iOS
+    const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
+
+    // 🔹 track first user interaction
     let userHasInteracted = false;
+
+    // mark first interaction on your play button
+    playBtn?.addEventListener('click', () => {
+      if (isIOS) userHasInteracted = true;
+    });
+
 
     // mark first interaction
     playBtn?.addEventListener('click', () => {
@@ -109,34 +119,25 @@
   // ===============================
   // TRACK NAVIGATION
   // ===============================
-    function playNextTrack() {
-      if (!playQueue.length) return;
+  function playNextTrack() {
+    if (!playQueue.length) return;
+    queueIndex = (queueIndex + 1) % playQueue.length;
+    window.currentIndex = playQueue[queueIndex];
+    window.loadTrack(window.currentIndex);
+    audio.play().catch(() => {});
+    updateActiveTrack();
+    updateMediaSession(window.tracks[window.currentIndex]);
+  }
 
-      // Only block on iOS Safari if user hasn't interacted
-      const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
-      if (isIOS && !userHasInteracted) return; // wait for first tap
-
-      queueIndex = (queueIndex + 1) % playQueue.length;
-      window.currentIndex = playQueue[queueIndex];
-      window.loadTrack(window.currentIndex);
-      audio.play().catch(() => {});
-      updateActiveTrack();
-      updateMediaSession(window.tracks[window.currentIndex]);
-    }
-
-    function playPrevTrack() {
-      if (!playQueue.length) return;
-
-      const isIOS = /iP(ad|hone|od)/.test(navigator.userAgent);
-      if (isIOS && !userHasInteracted) return;
-
-      queueIndex = (queueIndex - 1 + playQueue.length) % playQueue.length;
-      window.currentIndex = playQueue[queueIndex];
-      window.loadTrack(window.currentIndex);
-      audio.play().catch(() => {});
-      updateActiveTrack();
-      updateMediaSession(window.tracks[window.currentIndex]);
-    }
+  function playPrevTrack() {
+    if (!playQueue.length) return;
+    queueIndex = (queueIndex - 1 + playQueue.length) % playQueue.length;
+    window.currentIndex = playQueue[queueIndex];
+    window.loadTrack(window.currentIndex);
+    audio.play().catch(() => {});
+    updateActiveTrack();
+    updateMediaSession(window.tracks[window.currentIndex]);
+  }
 
   nextBtn?.addEventListener('click', playNextTrack);
   prevBtn?.addEventListener('click', playPrevTrack);
@@ -159,6 +160,18 @@
     navigator.mediaSession.setActionHandler('nexttrack', playNextTrack);
     navigator.mediaSession.setActionHandler('pause', () => audio.pause());
     navigator.mediaSession.setActionHandler('play', () => audio.play());
+
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+  if (isIOS && !userHasInteracted) return; // block until first tap
+  playPrevTrack();
+});
+
+navigator.mediaSession.setActionHandler('nexttrack', () => {
+  if (isIOS && !userHasInteracted) return; // block until first tap
+  playNextTrack();
+});
+
   }
 
   // ===============================
