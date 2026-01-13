@@ -179,18 +179,17 @@ async function updateMediaSession(track) {
     artwork: [{ src: squareCover, sizes: '300x300', type: 'image/jpeg' }]
   });
 
-  navigator.mediaSession.setActionHandler('previoustrack', () => {
-    if (isIOS && !userHasInteracted) return;
-    playPrevTrack();
-  });
-
-  navigator.mediaSession.setActionHandler('nexttrack', () => {
-    if (isIOS && !userHasInteracted) return;
-    playNextTrack();
-  });
-
-  navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-  navigator.mediaSession.setActionHandler('play', () => audio.play());
+navigator.mediaSession.setActionHandler('previoustrack', playPrevTrack); 
+navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+navigator.mediaSession.setActionHandler('play', () => audio.play());
+navigator.mediaSession.setActionHandler('previoustrack', () => {
+  if (isIOS && !userHasInteracted) return; // block until first tap
+  playPrevTrack();
+});
+navigator.mediaSession.setActionHandler('nexttrack', () => {
+  if (isIOS && !userHasInteracted) return; // block until first tap
+  playNextTrack();
+});
 }
 
 
