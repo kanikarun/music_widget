@@ -16,7 +16,10 @@
   const playIcon = playBtn.querySelector('.play-icon');
   const pauseIcon = playBtn.querySelector('.pause-icon');
   const audio = document.getElementById('audio');
-  const disc = document.getElementById('disc'); // Your disc element
+  const disc = document.getElementById('disc');
+
+  const nextBtn = document.getElementById('next');
+  const prevBtn = document.getElementById('prev');
 
   let isPlaylistOpen = false;
   let sortMode = localStorage.getItem('playlistSortMode') || 'title';
@@ -24,18 +27,21 @@
   const collapsedArtists = new Set();
   let searchQuery = '';
 
+  // 🔹 Playback queue
+  let playQueue = [];
+  let queueIndex = 0;
+
   // ===============================
   // PLAY/PAUSE ICONS
   // ===============================
-function updatePlayPauseIcons(isPlaying) {
-  playIcon.style.display = isPlaying ? 'none' : 'inline';
-  pauseIcon.style.display = isPlaying ? 'inline' : 'none';
-
-  if (disc) {
-    disc.classList.add('spin');                   // always add class
-    disc.style.animationPlayState = isPlaying ? 'running' : 'paused';  // pause/resume
+  function updatePlayPauseIcons(isPlaying) {
+    playIcon.style.display = isPlaying ? 'none' : 'inline';
+    pauseIcon.style.display = isPlaying ? 'inline' : 'none';
+    if (disc) {
+      disc.classList.add('spin');
+      disc.style.animationPlayState = isPlaying ? 'running' : 'paused';
+    }
   }
-}
 
   audio.addEventListener('play', () => updatePlayPauseIcons(true));
   audio.addEventListener('pause', () => updatePlayPauseIcons(false));
@@ -58,7 +64,8 @@ function updatePlayPauseIcons(isPlaying) {
   playlistClose?.addEventListener('click', closePlaylist);
   playlistOverlay?.addEventListener('click', e => e.stopPropagation());
   document.addEventListener('click', e => {
-    if (isPlaylistOpen && !playlistOverlay.contains(e.target) && !playlistToggle.contains(e.target)) closePlaylist();
+    if (isPlaylistOpen && !playlistOverlay.contains(e.target) && !playlistToggle.contains(e.target))
+      closePlaylist();
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePlaylist(); });
 
@@ -96,31 +103,29 @@ function updatePlayPauseIcons(isPlaying) {
   // ===============================
   // TRACK NAVIGATION
   // ===============================
-    function playNextTrack() {
-      if (!window.tracks?.length) return;
+  function playNextTrack() {
+    if (!playQueue.length) return;
 
-      window.currentIndex = (window.currentIndex + 1) % window.tracks.length;
-      window.loadTrack(window.currentIndex);
+    queueIndex = (queueIndex + 1) % playQueue.length;
+    window.currentIndex = playQueue[queueIndex];
 
-      audio.play().catch(() => {});
-      updateActiveTrack();
-      updateMediaSession(window.tracks[window.currentIndex]);
-    }
+    window.loadTrack(window.currentIndex);
+    audio.play().catch(() => {});
+    updateActiveTrack();
+    updateMediaSession(window.tracks[window.currentIndex]);
+  }
 
+  function playPrevTrack() {
+    if (!playQueue.length) return;
 
-    function playPrevTrack() {
-      if (!window.tracks?.length) return;
+    queueIndex = (queueIndex - 1 + playQueue.length) % playQueue.length;
+    window.currentIndex = playQueue[queueIndex];
 
-      window.currentIndex =
-        (window.currentIndex - 1 + window.tracks.length) % window.tracks.length;
-
-      window.loadTrack(window.currentIndex);
-
-      audio.play().catch(() => {});
-      updateActiveTrack();
-      updateMediaSession(window.tracks[window.currentIndex]);
-    }
-
+    window.loadTrack(window.currentIndex);
+    audio.play().catch(() => {});
+    updateActiveTrack();
+    updateMediaSession(window.tracks[window.currentIndex]);
+  }
 
   nextBtn?.addEventListener('click', playNextTrack);
   prevBtn?.addEventListener('click', playPrevTrack);
@@ -151,33 +156,40 @@ function updatePlayPauseIcons(isPlaying) {
   function renderPlaylist() {
     if (!playlistTracks || !window.tracks) return;
     playlistTracks.innerHTML = '';
+
     const currentTrackKey = getCurrentTrackKey();
     sortTracks();
 
-    const tracksToRender = sortMode === 'artist' ? groupTracksByArtist(window.tracks) : null;
+    if (sortMode === 'artist') {
+      const tracksByArtist = groupTracksByArtist(window.tracks);
+      Object.keys(tracksByArtist)
+        .sort((a,b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a))
+        .forEach(artist => {
+          const matchingTracks = tracksByArtist[artist].filter(matchesSearch)
+            .sort((a,b) => sortOrder==='asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
+          if (!matchingTracks.length) return;
 
-    if (tracksToRender) {
-      Object.keys(tracksToRender).sort((a,b)=> sortOrder==='asc'? a.localeCompare(b) : b.localeCompare(a)).forEach(artist=>{
-        const matchingTracks = tracksToRender[artist].filter(matchesSearch).sort((a,b)=> sortOrder==='asc'? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
-        if (!matchingTracks.length) return;
+          // Artist header
+          const header = document.createElement('div');
+          header.className = 'playlist-artist-header';
+          header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist)?'▶':'▼'}</span>`;
+          header.addEventListener('click', e => {
+            e.stopPropagation();
+            collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);
+            renderPlaylist(); // only expand/collapse
+          });
+          playlistTracks.appendChild(header);
 
-        const header = document.createElement('div');
-        header.className = 'playlist-artist-header';
-        header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist)?'▶':'▼'}</span>`;
-        header.addEventListener('click', e => {
-          e.stopPropagation();
-          collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);
-          renderPlaylist();
+          if (collapsedArtists.has(artist)) return;
+
+          // Track items
+          matchingTracks.forEach(track => createPlaylistItem(track, window.tracks.indexOf(track)));
         });
-        playlistTracks.appendChild(header);
-        if (collapsedArtists.has(artist)) return;
-
-        matchingTracks.forEach(track => createPlaylistItem(track, window.tracks.indexOf(track)));
-      });
     } else {
-      window.tracks.map((track,i)=>({track,originalIndex:i})).filter(({track})=>matchesSearch(track)).forEach(({track,originalIndex})=>{
-        createPlaylistItem(track, originalIndex);
-      });
+      window.tracks
+        .map((track,i)=>({track,originalIndex:i}))
+        .filter(({track})=>matchesSearch(track))
+        .forEach(({track,originalIndex})=>createPlaylistItem(track, originalIndex));
     }
 
     restoreCurrentIndex(currentTrackKey);
@@ -195,13 +207,17 @@ function updatePlayPauseIcons(isPlaying) {
         <p class="playlist-item-artist">${track.artist}</p>
       </div>
     `;
+
     item.addEventListener('click', () => {
+      // FULL sorted playlist as queue
+      playQueue = window.tracks.map((_, i) => i);
+      queueIndex = playQueue.indexOf(index);
+
       window.currentIndex = index;
       window.loadTrack(index);
-
       audio.play().catch(() => {});
       updateActiveTrack();
-      updateMediaSession(window.tracks[window.currentIndex]);
+      updateMediaSession(window.tracks[index]);
     });
 
     playlistTracks.appendChild(item);
@@ -243,11 +259,16 @@ function updatePlayPauseIcons(isPlaying) {
 
   function initPlaylist(){
     if(!window.tracks?.length) return;
+
     updateSortButtonState();
     renderPlaylist();
+
     if(window.currentIndex != null) updateMediaSession(window.tracks[window.currentIndex]);
-    // Sync Play/Pause icons with current audio state
     updatePlayPauseIcons(!audio.paused);
+
+    // initialize full playlist queue
+    playQueue = window.tracks.map((_,i)=>i);
+    queueIndex = window.currentIndex || 0;
   }
 
   window.tracks ? initPlaylist() : document.addEventListener('DOMContentLoaded', ()=>setTimeout(initPlaylist,100));
