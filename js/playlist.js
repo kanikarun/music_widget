@@ -324,3 +324,4 @@ function loadPreferences() {
   sortMode = localStorage.getItem('playlistSortMode') || 'title';
   sortOrder = localStorage.getItem('playlistSortOrder') || 'asc';
 }
+

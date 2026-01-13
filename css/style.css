@@ -27,7 +27,7 @@ body{
 
 /* Background layers (keeps your existing markup) */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
-.bg-image{position:absolute;inset:0;background-image:url('../assets/images/assets/images/2a303d6fc60050e75fa2f20b36861878.jpg');background-size:cover;background-position:center;filter:brightness(0.5) saturate(1.05);transform:scale(1.06);transition:opacity .45s ease;opacity:1;animation:bgPulse 10s ease-in-out infinite;}
+.bg-image{position:absolute;inset:0;background-image:url('../assets/images/Ash.jpg');background-size:cover;background-position:center;filter:brightness(0.5) saturate(1.05);transform:scale(1.06);transition:opacity .45s ease;opacity:1;animation:bgPulse 10s ease-in-out infinite;}
 .layer{position:absolute;border-radius:9999px;opacity:.35;mix-blend-mode:screen}
 .layer--far{width:680px;height:680px;left:-10%;top:-8%;background:radial-gradient(circle at 30% 30%, rgba(var(--accent-a),0.16), transparent 35%)}
 .layer--mid{width:420px;height:420px;right:-4%;bottom:-6%;background:radial-gradient(circle at 70% 70%, rgba(var(--accent-b),0.14), transparent 30%)}

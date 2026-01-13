@@ -589,5 +589,3 @@
 
 /* Make sure everything sits above background */
 .music-container,*{z-index:10}
-
-
