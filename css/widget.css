@@ -387,6 +387,10 @@
 .small-btn:hover svg {
   color: #1db954; /* hover highlight like Spotify */
 }
+.playlist-artist-header.active {
+  background-color: rgba(255, 0, 179, 0.097); /* subtle highlight */
+  font-weight: bold;
+}
 
 
 #play-inline{width:60px;height:60px;border-radius:999px;background:linear-gradient(135deg, rgba(var(--accent-a),0.14), rgba(var(--accent-b),0.10));box-shadow:0 10px 30px rgba(12,18,36,0.6), 0 0 26px rgba(var(--accent-a),0.06);color:var(--text);border:1px solid rgba(255,255,255,0.04);font-size:20px}

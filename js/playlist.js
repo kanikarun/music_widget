@@ -153,60 +153,60 @@
   // ===============================
   // PLAYLIST RENDERING
   // ===============================
-  function renderPlaylist() {
-    if (!playlistTracks || !window.tracks) return;
-    playlistTracks.innerHTML = '';
+function renderPlaylist() {
+  if (!playlistTracks || !window.tracks) return;
+  playlistTracks.innerHTML = '';
 
-    const currentTrackKey = getCurrentTrackKey();
-    sortTracks();
+  const currentTrackKey = getCurrentTrackKey();
+  sortTracks();
 
-    let renderedIndices = []; // 🔹 current playlist order
+  let renderedIndices = [];
+  let currentArtist = window.currentIndex != null ? window.tracks[window.currentIndex].artist : null;
 
-    if (sortMode === 'artist') {
-      const tracksByArtist = groupTracksByArtist(window.tracks);
-      Object.keys(tracksByArtist)
-        .sort((a,b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a))
-        .forEach(artist => {
-          const matchingTracks = tracksByArtist[artist].filter(matchesSearch)
-            .sort((a,b) => sortOrder==='asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
-          if (!matchingTracks.length) return;
+  if (sortMode === 'artist') {
+    const tracksByArtist = groupTracksByArtist(window.tracks);
+    Object.keys(tracksByArtist)
+      .sort((a,b) => sortOrder === 'asc' ? a.localeCompare(b) : b.localeCompare(a))
+      .forEach(artist => {
+        const matchingTracks = tracksByArtist[artist].filter(matchesSearch)
+          .sort((a,b) => sortOrder==='asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
+        if (!matchingTracks.length) return;
 
-          // Artist header (only collapse/expand)
-          const header = document.createElement('div');
-          header.className = 'playlist-artist-header';
-          header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist)?'▶':'▼'}</span>`;
-          header.addEventListener('click', e => {
-            e.stopPropagation();
-            collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);
-            renderPlaylist();
-          });
+        const header = document.createElement('div');
+        header.className = 'playlist-artist-header';
+        if (artist === currentArtist) header.classList.add('active'); // 🔹 highlight active artist
+        header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist)?'▶':'▼'}</span>`;
 
-          playlistTracks.appendChild(header);
-          if (collapsedArtists.has(artist)) return;
-
-          // Track items
-          matchingTracks.forEach(track => {
-            const trackIndex = window.tracks.indexOf(track);
-            renderedIndices.push(trackIndex);
-            createPlaylistItem(track, trackIndex);
-          });
+        header.addEventListener('click', e => {
+          e.stopPropagation();
+          collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);
+          renderPlaylist();
         });
-    } else {
-      window.tracks
-        .map((track,i)=>({track,originalIndex:i}))
-        .filter(({track})=>matchesSearch(track))
-        .forEach(({track,originalIndex}) => {
-          renderedIndices.push(originalIndex);
-          createPlaylistItem(track, originalIndex);
+
+        playlistTracks.appendChild(header);
+        if (collapsedArtists.has(artist)) return;
+
+        matchingTracks.forEach(track => {
+          const trackIndex = window.tracks.indexOf(track);
+          renderedIndices.push(trackIndex);
+          createPlaylistItem(track, trackIndex);
         });
-    }
-
-    // 🔹 Update playQueue to current rendered order
-    playQueue = renderedIndices;
-    queueIndex = playQueue.indexOf(window.currentIndex ?? 0);
-
-    restoreCurrentIndex(currentTrackKey);
+      });
+  } else {
+    window.tracks
+      .map((track,i)=>({track,originalIndex:i}))
+      .filter(({track})=>matchesSearch(track))
+      .forEach(({track,originalIndex}) => {
+        renderedIndices.push(originalIndex);
+        createPlaylistItem(track, originalIndex);
+      });
   }
+
+  playQueue = renderedIndices;
+  queueIndex = playQueue.indexOf(window.currentIndex ?? 0);
+
+  restoreCurrentIndex(currentTrackKey);
+}
 
   function createPlaylistItem(track,index){
     const item = document.createElement('div');
