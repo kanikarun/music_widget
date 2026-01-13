@@ -1,5 +1,5 @@
 // ===============================
-// PLAYLIST MODULE WITH BACKGROUND SUPPORT (iOS-friendly)
+// PLAYLIST MODULE WITH FULL QUEUE SYNC AND BACKGROUND SUPPORT
 // ===============================
 (function () {
   const playlistToggle = document.getElementById('playlist-toggle');
@@ -27,11 +27,9 @@
   const collapsedArtists = new Set();
   let searchQuery = '';
 
-  // 🔹 Playback queue
+  // Playback queue and current index
   let playQueue = [];
   let queueIndex = 0;
-
-  // 🔹 Track user interaction for iOS autoplay
   let userHasInteracted = false;
 
   // ===============================
@@ -50,22 +48,21 @@
   audio.addEventListener('pause', () => updatePlayPauseIcons(false));
 
   // ===============================
-  // USER INTERACTION INIT
+  // USER INTERACTION INIT (iOS)
   // ===============================
   playBtn?.addEventListener('click', () => {
     userHasInteracted = true;
-    audio.play().catch(() => {});
+    audio.play().catch(()=>{});
   });
 
   // ===============================
-  // PLAYLIST VISIBILITY
+  // PLAYLIST TOGGLE
   // ===============================
   function togglePlaylist() {
     isPlaylistOpen = !isPlaylistOpen;
     playlistOverlay.classList.toggle('show', isPlaylistOpen);
     if (isPlaylistOpen) renderPlaylist();
   }
-
   function closePlaylist() {
     isPlaylistOpen = false;
     playlistOverlay.classList.remove('show');
@@ -87,7 +84,6 @@
     if (!searchQuery) return true;
     return track.title.toLowerCase().includes(searchQuery) || track.artist.toLowerCase().includes(searchQuery);
   }
-
   searchInput?.addEventListener('input', e => {
     searchQuery = e.target.value.toLowerCase();
     renderPlaylist();
@@ -112,29 +108,37 @@
   }
 
   // ===============================
-  // TRACK NAVIGATION
+  // PLAY/PAUSE & NEXT/PREV HANDLERS
   // ===============================
   function playNextTrack() {
     if (!playQueue.length) return;
+    if (queueIndex < 0 || queueIndex >= playQueue.length) {
+      queueIndex = playQueue.indexOf(window.currentIndex);
+      if (queueIndex < 0) queueIndex = 0;
+    }
     queueIndex = (queueIndex + 1) % playQueue.length;
     window.currentIndex = playQueue[queueIndex];
     window.loadTrack(window.currentIndex);
-    if (userHasInteracted) audio.play().catch(() => {});
+    if (userHasInteracted) audio.play().catch(()=>{});
     updateActiveTrack();
     updateMediaSession(window.tracks[window.currentIndex]);
   }
 
   function playPrevTrack() {
     if (!playQueue.length) return;
+    if (queueIndex < 0 || queueIndex >= playQueue.length) {
+      queueIndex = playQueue.indexOf(window.currentIndex);
+      if (queueIndex < 0) queueIndex = 0;
+    }
     queueIndex = (queueIndex - 1 + playQueue.length) % playQueue.length;
     window.currentIndex = playQueue[queueIndex];
     window.loadTrack(window.currentIndex);
-    if (userHasInteracted) audio.play().catch(() => {});
+    if (userHasInteracted) audio.play().catch(()=>{});
     updateActiveTrack();
     updateMediaSession(window.tracks[window.currentIndex]);
   }
 
-  // Click + touch support for mobile
+  // Attach buttons for click + touch
   [nextBtn, prevBtn].forEach((btn, idx) => {
     if (!btn) return;
     const handler = idx === 0 ? playNextTrack : playPrevTrack;
@@ -178,28 +182,24 @@
     window.currentIndex = index;
     audio.src = track.src;
 
-    // Update title & artist
     titleEl.textContent = track.title;
     artistEl.textContent = track.artist;
 
-    // Update background
     const bgEl = document.querySelector('.bg-image');
     if (bgEl && track.cover) bgEl.style.backgroundImage = `url('${track.cover}')`;
 
-    // Update spinning disc
     if (disc && track.cover) {
       disc.src = track.cover;
       disc.classList.add('spin');
       disc.style.animationPlayState = audio.paused ? 'paused' : 'running';
     }
 
-    // Update playlist active item & artist header
     updateActiveTrack();
     updateMediaSession(track);
   };
 
   // ===============================
-  // UPDATE ACTIVE TRACK
+  // ACTIVE TRACK HIGHLIGHT
   // ===============================
   function updateActiveTrack() {
     playlistTracks.querySelectorAll('.playlist-item').forEach(item => {
@@ -208,7 +208,6 @@
 
     const active = playlistTracks.querySelector('.playlist-item.active');
     active?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
     updateActiveArtistHeader();
   }
 
@@ -222,7 +221,7 @@
   }
 
   // ===============================
-  // PLAYLIST RENDERING
+  // RENDER PLAYLIST
   // ===============================
   function renderPlaylist() {
     if (!playlistTracks || !window.tracks) return;
