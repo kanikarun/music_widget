@@ -143,57 +143,63 @@
   prevBtn?.addEventListener('click', playPrevTrack);
   audio?.addEventListener('ended', playNextTrack);
 
-function getSquareCover(trackCoverUrl, size = 300) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous'; // needed if cover is from another domain
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext('2d');
+function setupMediaSessionHandlers() {
+  if (!('mediaSession' in navigator)) return;
 
-      // Calculate crop area (center crop)
-      const minSide = Math.min(img.width, img.height);
-      const sx = (img.width - minSide) / 2;
-      const sy = (img.height - minSide) / 2;
-
-      ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, size, size);
-      resolve(canvas.toDataURL('image/jpeg')); // returns a square base64 image
-    };
-    img.onerror = () => resolve(trackCoverUrl); // fallback if failed
-    img.src = trackCoverUrl;
+  navigator.mediaSession.setActionHandler('previoustrack', () => {
+    if (isIOS && !userHasInteracted) return;
+    playPrevTrack();
   });
+
+  navigator.mediaSession.setActionHandler('nexttrack', () => {
+    if (isIOS && !userHasInteracted) return;
+    playNextTrack();
+  });
+
+  navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+  navigator.mediaSession.setActionHandler('play', () => audio.play());
 }
 
-// Usage inside updateMediaSession
 async function updateMediaSession(track) {
   if (!('mediaSession' in navigator) || !track) return;
 
-  const squareCover = await getSquareCover(track.cover, 300); // 300x300 px square
+  // 1️⃣ Ensure handlers are set first
+  setupMediaSessionHandlers();
 
+  // 2️⃣ Process the cover image (square)
+  let squareCover = track.cover;
+  try {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = track.cover;
+    });
+
+    const size = 300;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+
+    const minSide = Math.min(img.width, img.height);
+    const sx = (img.width - minSide) / 2;
+    const sy = (img.height - minSide) / 2;
+
+    ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, size, size);
+    squareCover = canvas.toDataURL('image/jpeg');
+  } catch (e) {
+    squareCover = track.cover; // fallback
+  }
+
+  // 3️⃣ Update metadata after processing cover
   navigator.mediaSession.metadata = new MediaMetadata({
     title: track.title,
     artist: track.artist,
     album: track.album || 'Music Widget',
     artwork: [{ src: squareCover, sizes: '300x300', type: 'image/jpeg' }]
   });
-
-    navigator.mediaSession.setActionHandler('previoustrack', playPrevTrack);
-    navigator.mediaSession.setActionHandler('nexttrack', playNextTrack);
-    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-    navigator.mediaSession.setActionHandler('play', () => audio.play());
-
-
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-  if (isIOS && !userHasInteracted) return; // block until first tap
-  playPrevTrack();
-});
-
-navigator.mediaSession.setActionHandler('nexttrack', () => {
-  if (isIOS && !userHasInteracted) return; // block until first tap
-  playNextTrack();
-});
 }
 
 
