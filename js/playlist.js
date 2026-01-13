@@ -31,10 +31,15 @@ let searchQuery = '';
   // ===============================
   // PLAYLIST VISIBILITY
   // ===============================
-  function togglePlaylist() {
-    isPlaylistOpen = !isPlaylistOpen;
-    playlistOverlay.classList.toggle('show', isPlaylistOpen);
+function togglePlaylist() {
+  isPlaylistOpen = !isPlaylistOpen;
+  playlistOverlay.classList.toggle('show', isPlaylistOpen);
+  
+  // ✅ Render playlist when opening
+  if (isPlaylistOpen) {
+    renderPlaylist();
   }
+}
 
   function closePlaylist() {
     isPlaylistOpen = false;
