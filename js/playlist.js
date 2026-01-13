@@ -160,6 +160,8 @@
     const currentTrackKey = getCurrentTrackKey();
     sortTracks();
 
+    let renderedIndices = []; // 🔹 current playlist order
+
     if (sortMode === 'artist') {
       const tracksByArtist = groupTracksByArtist(window.tracks);
       Object.keys(tracksByArtist)
@@ -169,28 +171,39 @@
             .sort((a,b) => sortOrder==='asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
           if (!matchingTracks.length) return;
 
-          // Artist header
+          // Artist header (only collapse/expand)
           const header = document.createElement('div');
           header.className = 'playlist-artist-header';
           header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist)?'▶':'▼'}</span>`;
           header.addEventListener('click', e => {
             e.stopPropagation();
             collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);
-            renderPlaylist(); // only expand/collapse
+            renderPlaylist();
           });
-          playlistTracks.appendChild(header);
 
+          playlistTracks.appendChild(header);
           if (collapsedArtists.has(artist)) return;
 
           // Track items
-          matchingTracks.forEach(track => createPlaylistItem(track, window.tracks.indexOf(track)));
+          matchingTracks.forEach(track => {
+            const trackIndex = window.tracks.indexOf(track);
+            renderedIndices.push(trackIndex);
+            createPlaylistItem(track, trackIndex);
+          });
         });
     } else {
       window.tracks
         .map((track,i)=>({track,originalIndex:i}))
         .filter(({track})=>matchesSearch(track))
-        .forEach(({track,originalIndex})=>createPlaylistItem(track, originalIndex));
+        .forEach(({track,originalIndex}) => {
+          renderedIndices.push(originalIndex);
+          createPlaylistItem(track, originalIndex);
+        });
     }
+
+    // 🔹 Update playQueue to current rendered order
+    playQueue = renderedIndices;
+    queueIndex = playQueue.indexOf(window.currentIndex ?? 0);
 
     restoreCurrentIndex(currentTrackKey);
   }
@@ -208,11 +221,9 @@
       </div>
     `;
 
+    // 🔹 Clicking track plays immediately in the current order
     item.addEventListener('click', () => {
-      // FULL sorted playlist as queue
-      playQueue = window.tracks.map((_, i) => i);
       queueIndex = playQueue.indexOf(index);
-
       window.currentIndex = index;
       window.loadTrack(index);
       audio.play().catch(() => {});
