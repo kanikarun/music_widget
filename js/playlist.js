@@ -143,31 +143,30 @@
   prevBtn?.addEventListener('click', playPrevTrack);
   audio?.addEventListener('ended', playNextTrack);
 
-function setupMediaSessionHandlers() {
-  if (!('mediaSession' in navigator)) return;
 
-  navigator.mediaSession.setActionHandler('previoustrack', () => {
-    if (isIOS && !userHasInteracted) return;
-    playPrevTrack();
-  });
-
-  navigator.mediaSession.setActionHandler('nexttrack', () => {
-    if (isIOS && !userHasInteracted) return;
-    playNextTrack();
-  });
-
-  navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-  navigator.mediaSession.setActionHandler('play', () => audio.play());
-}
+  
 
 async function updateMediaSession(track) {
   if (!('mediaSession' in navigator) || !track) return;
 
-  // 1️⃣ Ensure handlers are set first
-  setupMediaSessionHandlers();
+  // 1️⃣ Set handlers immediately (so next/prev works on mobile)
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      if (isIOS && !userHasInteracted) return;
+      playPrevTrack();
+    });
 
-  // 2️⃣ Process the cover image (square)
-  let squareCover = track.cover;
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      if (isIOS && !userHasInteracted) return;
+      playNextTrack();
+    });
+
+    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+    navigator.mediaSession.setActionHandler('play', () => audio.play());
+  }
+
+  // 2️⃣ Create a square cover only for Media Session (does NOT affect page layout)
+  let squareCover = track.cover; // default fallback
   try {
     const img = new Image();
     img.crossOrigin = 'anonymous';
@@ -177,7 +176,7 @@ async function updateMediaSession(track) {
       img.src = track.cover;
     });
 
-    const size = 300;
+    const size = 300; // fixed size only for Media Session
     const canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
@@ -193,7 +192,7 @@ async function updateMediaSession(track) {
     squareCover = track.cover; // fallback
   }
 
-  // 3️⃣ Update metadata after processing cover
+  // 3️⃣ Update Media Session metadata (only affects OS overlay, not page)
   navigator.mediaSession.metadata = new MediaMetadata({
     title: track.title,
     artist: track.artist,
@@ -201,6 +200,7 @@ async function updateMediaSession(track) {
     artwork: [{ src: squareCover, sizes: '300x300', type: 'image/jpeg' }]
   });
 }
+
 
 
   // ===============================
