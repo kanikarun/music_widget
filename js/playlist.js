@@ -332,7 +332,7 @@ updateMarqueeText(track.title, track.artist);
           const header = document.createElement('div');
           header.className = 'playlist-artist-header';
           if (artist === currentArtist) header.classList.add('active');
-          header.innerHTML = `<span>${artist}</span><span>${collapsedArtists.has(artist) ? '▶' : '▼'}</span>`;
+        header.innerHTML = `<span class="marquee-mask"><span class="marquee-text">${artist}</span></span><span class="toggle-arrow">${collapsedArtists.has(artist) ? '▶' : '▼'}</span>`;
           header.addEventListener('click', e => {
             e.stopPropagation();
             collapsedArtists.has(artist) ? collapsedArtists.delete(artist) : collapsedArtists.add(artist);

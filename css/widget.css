@@ -607,7 +607,7 @@
   .marquee-text {
     font-size: 16px;       /* tablet */
   }
-
+}
 /* Accessibility tweaks for reduced motion */
 @media (prefers-reduced-motion:reduce){
   .orb--one,.orb--two{animation:none}
