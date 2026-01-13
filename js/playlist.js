@@ -115,6 +115,56 @@
     localStorage.setItem('playlistSortMode', sortMode);
     localStorage.setItem('playlistSortOrder', sortOrder);
   }
+function updateMarqueeText(title, artist) {
+  const titleMask = document.querySelector('.marquee-title .marquee-mask');
+  const artistMask = document.querySelector('.marquee-artist .marquee-mask');
+
+  if (titleMask) {
+    let titleText = titleMask.querySelector('.marquee-text');
+    if (!titleText) {
+      titleText = document.createElement('span');
+      titleText.className = 'marquee-text';
+      titleMask.appendChild(titleText);
+    }
+    titleText.textContent = title;
+  }
+
+  if (artistMask) {
+    let artistText = artistMask.querySelector('.marquee-text');
+    if (!artistText) {
+      artistText = document.createElement('span');
+      artistText.className = 'marquee-text';
+      artistMask.appendChild(artistText);
+    }
+    artistText.textContent = artist;
+  }
+
+  initMarquees(); // recalc scroll
+}
+
+function initMarquees() {
+  const masks = document.querySelectorAll('.marquee-mask');
+  masks.forEach(mask => {
+    const text = mask.querySelector('.marquee-text');
+    if (!text) return;
+
+    const maskWidth = mask.offsetWidth;
+    const textWidth = text.scrollWidth;
+
+    if (textWidth > maskWidth) {
+      text.style.setProperty('--marquee-distance', `${textWidth - maskWidth}px`);
+      const duration = Math.max(6, (textWidth - maskWidth) / 20); // px/sec
+      text.style.setProperty('--marquee-duration', `${duration}s`);
+      text.classList.add('marquee');
+    } else {
+      text.classList.remove('marquee');
+      text.style.transform = 'translateX(0)';
+    }
+  });
+}
+
+// recalc on window resize
+window.addEventListener('resize', initMarquees);
 
   // ===============================
   // TRACK NAVIGATION
@@ -144,7 +194,7 @@
   audio?.addEventListener('ended', playNextTrack);
 
 
-  
+
 
 async function updateMediaSession(track) {
   if (!('mediaSession' in navigator) || !track) return;
@@ -213,9 +263,9 @@ window.loadTrack = function(index) {
   window.currentIndex = index;
   audio.src = track.src;
 
-  // Update title & artist
-  titleEl.textContent = track.title;
-  artistEl.textContent = track.artist;
+
+// Update title & artist with responsive marquee
+updateMarqueeText(track.title, track.artist);
 
   // Update background
   const bgEl = document.querySelector('.bg-image');
