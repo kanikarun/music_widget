@@ -450,9 +450,12 @@
   }
 
   .marquee-mask {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
+      max-width:100%;       /* fill parent width on mobile */
+    }
+
+    .marquee-text {
+      font-size: 14px;       /* slightly smaller on mobile */
+    }
 
   /* Time above progress, left-aligned */
   .ctrl-row {
@@ -601,10 +604,9 @@
     height: 48px !important;
   }
 
-  .marquee-mask {
-    max-width: 100% !important;
+  .marquee-text {
+    font-size: 16px;       /* tablet */
   }
-}
 
 /* Accessibility tweaks for reduced motion */
 @media (prefers-reduced-motion:reduce){
@@ -616,6 +618,9 @@
 /* Larger screens — keep info left-aligned */
 @media (min-width:1024px){
   .music-info{align-items:flex-start;text-align:left;padding-left:6px}
+    .marquee-text {
+    font-size: 18px;       /* desktop */
+  }
 }
 
 /* Decorative subtle lines inside the card */
