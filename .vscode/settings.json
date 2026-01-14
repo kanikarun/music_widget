@@ -1,3 +1,6 @@
 {
-    "liveServer.settings.port": 5702
+    "liveServer.settings.port": 5702,
+    "marquee.widgets.npm-stats.packageNames": [
+        "music-widget"
+    ]
 }
