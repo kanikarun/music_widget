@@ -49,5 +49,6 @@
   { "id": 48, "title": "Drown", "artist": "G-Devith", "src": "assets/audio/G-Devith - ទឹកលិចកញ្ចឹងក ( DROWN ) _ Street Ver.mp4", "cover": "assets/images/drown.jpg" },
   { "id": 49, "title": "DISCO BAR", "artist": "G-Devith", "src": "assets/audio/G-Devith - DISCO BAR.mp4", "cover": "assets/images/discobar.jpg" },
   { "id": 50, "title": "Miss. Dior", "artist": "G-Devith", "src": "assets/audio/G-Devith - នារី Dior _ Official Lyric Video.mp4", "cover": "assets/images/dior.jpg" },
-  { "id": 51, "title": "The Moon", "artist": "G-Devith", "src": "assets/audio/G-Devith - ដួងច័ន្ទ ( THE MOON ) Official M_V.mp4", "cover": "assets/images/The MOON.jpg" }
+  { "id": 51, "title": "The Moon", "artist": "G-Devith", "src": "assets/audio/G-Devith - ដួងច័ន្ទ ( THE MOON ) Official M_V.mp4", "cover": "assets/images/The MOON.jpg" },
+  { "id": 52, "title": "The Swing", "artist": "G-Devith", "src": "assets/audio/G-DEVITH - វាយោ ( Swings ) 3D Animation Video.mp4", "cover": "assets/images/TheSwin.jpg" }
 ]
