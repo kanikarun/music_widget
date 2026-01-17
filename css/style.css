@@ -11,7 +11,10 @@
   --text: rgba(255,255,255,0.95);
   --muted: rgba(255,255,255,0.7);
   --accent-rgb: var(--accent-b, 120, 180, 255);
+  --overlay-width: 380px;
 }
+
+
 
 
 /* Base layout */

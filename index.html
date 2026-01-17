@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="css/overlay.css">    <!-- Styles for playlist overlay -->
   <link rel="stylesheet" href="css/widget.css">     <!-- Styles for music widget UI -->
   <link rel="stylesheet" href="css/clock.css">      <!-- Styles for clock widget -->
+  <link rel="stylesheet" href="css/favorite.css">   <!-- Styles for favorite button -->
+
     <!-- Favicon -->
   <link rel="icon" href="assets/icons/music.png" type="image/png">
 </head>
@@ -79,8 +81,28 @@
         <!-- Tracks will be dynamically inserted here by JS -->
       </div>
     </div>
-
   </div>
+
+
+          <!-- ============================= -->
+        <!-- Favorites Toggle Button -->
+        <!-- ============================= -->
+        <button class="playlist-toggle-btn" id="favorites-toggle">
+          <span class="playlist-icon">♥</span>
+          <span class="playlist-text">Favorites</span>
+        </button>
+
+        <!-- ============================= -->
+        <!-- Favorites Overlay -->
+        <!-- ============================= -->
+        <div class="playlist-overlay" id="favorites-overlay">
+          <div class="playlist-header">
+            <h3>Favorites</h3>
+            <button class="playlist-close" id="favorites-close">✕</button>
+          </div>
+
+          <div class="playlist-tracks" id="favorites-tracks"></div>
+        </div>
 
   <!-- ================================
        Music Widget Container
@@ -170,6 +192,18 @@
           </div> <!-- End controls -->
         </div> <!-- End music info -->
       </div> <!-- End player row -->
+                <!-- Favorite -->
+        <button id="widget-fav-btn" class="fav-btn" aria-label="Favorite">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                    2 5.42 4.42 3 7.5 3
+                    9.24 3 10.91 3.81 12 5.08
+                    13.09 3.81 14.76 3 16.5 3
+                    19.58 3 22 5.42 22 8.5
+                    22 12.28 18.6 15.36 13.45 20.04L12 21.35z"/>
+          </svg>
+        </button>
+
     </div> <!-- End music-widget -->
 
     <!-- Audio element (can be MP4/MP3) -->
@@ -181,10 +215,11 @@
        JavaScript files
        Handles interactivity, playlist, and volume
   ================================= -->
-  <script src="js/main.js" defer ></script>        <!-- Main player functionality -->
-  <script src="js/volume.js"defer ></script>      <!-- Volume control logic -->
-  <script src="js/playlist.js" defer></script>     <!-- Playlist management -->
-  <script src="js/clock.js" defer></script> <!-- Clock logic -->  
+<script src="js/main.js" defer></script>
+<script src="js/volume.js" defer></script>
+<script src="js/playlist.js" defer></script>
+<script src="js/clock.js" defer></script>
+
 </body>
 <div class="glass-credit marquee">
   © Credit music, photos to the right owners
