@@ -1,280 +1,53 @@
 [
-  {
-    "title": "Ash",
-    "artist": "Le Sserafim(르세라핌)",
-    "src": "assets/audio/Ash.mp4",
-    "cover": "assets/images/Ash.jpg"
-  },
-  {
-    "title": "Flowers",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/aespa_flower.mp4",
-    "cover": "assets/images/Flowers.jpg"
-  },
-  {
-    "title": "Fame Is A Gun",
-    "artist": "Adison Rae",
-    "src": "assets/audio/Fame is a gun.mp4",
-    "cover": "assets/images/Fame.jpg"
-  },
-  {
-    "title": "Shinigami Eyes  ",
-    "artist": "Grimes (그라임스) ",
-    "src": "assets/audio/Grimes - Shinigami Eyes (Lyrics).mp4",
-    "cover": "assets/images/ShigamiEyes.jpg"
-  },
-    {
-    "title": "Lucky One  ",
-    "artist": "Cosmosy ",
-    "src": "assets/audio/luckyone.mp4",
-    "cover": "assets/images/luckyone.jpg"
-  },
-      {
-    "title": "Diet Pepsi  ",
-    "artist": "Adison Rae",
-    "src": "assets/audio/diet_pepsi.mp4",
-    "cover": "assets/images/dietpepsi.jpg"
-  },
-    {
-    "title": "Heaven And Back  ",
-    "artist": "chase atlantic ",
-    "src": "assets/audio/Chase Atlantic - HEAVEN AND BACK.mp4",
-    "cover": "assets/images/heaven_and_back.jpg"
-  },
-      {
-    "title": "Hurt You  ",
-    "artist": "The Weeknd ",
-    "src": "assets/audio/The Weeknd - Hurt You feat. Gesaffelstein (Official Audio).mp4",
-    "cover": "assets/images/hurt.jpg"
-  },
-        {
-    "title": "Deja Vu  ",
-    "artist": "Dream Catcher ",
-    "src": "assets/audio/Dreamcatcher(드림캐쳐) '데자부 (Deja Vu)' MV.mp4",
-    "cover": "assets/images/dream catcher.jpg"
-  },
-    {
-    "title": "Greedy",
-    "artist": "Tate McRae",
-    "src": "assets/audio/Tate McRae - greedy (Official Video).mp4",
-    "cover": "assets/images/Greedy.jpg"
-  },
-  {
-    "title": "4 Walls",
-    "artist": "F(X)",
-    "src": "assets/audio/F(x) 4 walls audio ver..mp4",
-    "cover": "assets/images/world_class_sinner.jpg"
-  },
-  {
-    "title": "Drift",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/dift-aespa.mp4",
-    "cover": "assets/images/dift aespa.jpg"
-  },
-  {
-    "title": "Mine",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/aespa_mine.mp4",
-    "cover": "assets/images/mine.jpg"
-  },
-  {
-    "title": "Kill It",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/Kill It.mp4",
-    "cover": "assets/images/kill--it.jpg"
-  },
-    {
-    "title": "Right Now",
-    "artist": "Newjeans(뉴진스)",
-    "src": "assets/audio/NewJeans - 'Right Now' [Audio].mp4",
-    "cover": "assets/images/rightnow.jpg"
-  },
-  {
-    "title": "Seoul City",
-    "artist": "Jennie",
-    "src": "assets/audio/JENNIE - Seoul City (Official Lyric Video).mp4",
-    "cover": "assets/images/seoulcity.jpg"
-  },
-  {
-    "title": "Gala",
-    "artist": "XG",
-    "src": "assets/audio/Gala.mp4",
-    "cover": "assets/images/gala.jpg"
-  },
-  {
-    "title": "Something ain't right",
-    "artist": "XG",
-    "src": "assets/audio/sth_aint_right.mp4",
-    "cover": "assets/images/sth_aint_right.jpg"
-  },
-  {
-    "title": "Imaginary friend",
-    "artist": "ITZY",
-    "src": "assets/audio/Imaginary Friend.mp4",
-    "cover": "assets/images/imaginary_friend.jpg"
-  },
-  {
-    "title": "Simon Says",
-    "artist": "YC BANKS ft B Smyth",
-    "src": "assets/audio/YC BANKS - Simon Says ft. B Smyth  (Audio) _ (Spread open your legs).mp4",
-    "cover": "assets/images/simonsay.jpg"
-  },
-  {
-    "title": "Reminder",
-    "artist": "The Weeknd ",
-    "src": "assets/audio/Reminder.mp4",
-    "cover": "assets/images/reminder.jpg"
-  },
-    {
-    "title": "Everytime",
-    "artist": "Ariana Grande",
-    "src": "assets/audio/everytime.mp4",
-    "cover": "assets/images/everytime.jpg"
-  },
-  {
-    "title": "Double Fantasy",
-    "artist": "The Weeknd ",
-    "src": "assets/audio/doubleFantasy.mp4",
-    "cover": "assets/images/double_fantasy.jpg"
-  },
-  {
-    "title": "Unforgettable",
-    "artist": "French Montana",
-    "src": "assets/audio/Unforgettable.mp4",
-    "cover": "assets/images/unforgetable.jpg"
-  },
-  {
-    "title": "Escapism",
-    "artist": "RAYE",
-    "src": "assets/audio/Escapism._Sped_Up_144p.mp4",
-    "cover": "assets/images/escip.jpg"
-  },
-  {
-    "title": "Harleys in Hawaii",
-    "artist": "Katy Perry",
-    "src": "assets/audio/Harleys_In_Hawaii_144P.mp4",
-    "cover": "assets/images/harley_in_hawaii.jpg"
-  },
-  {
-    "title": "WHEN I M WITH YOU (ft Tyla) ",
-    "artist": "Lisa",
-    "src": "assets/audio/LISA_-_WHEN_I_M_WITH_YOU_feat._Tyla_Official_Music_Video_360P.mp4",
-    "cover": "assets/images/wheniamwithyou.jpg"
-  },
-  {
-    "title": "Moonstruck",
-    "artist": "Enhypen",
-    "src": "assets/audio/ENHYPEN (엔하이픈) 'Moonstruck' Official Audio.mp4",
-    "cover": "assets/images/moonstruck.jpg"
-  },
-  {
-    "title": "Fatal Trouble",
-    "artist": "Enhypen",
-    "src": "assets/audio/Fatal Trouble.mp4",
-    "cover": "assets/images/fetal_trouble.jpg"
-  },
-  {
-    "title": "Flashover",
-    "artist": "Enhypen",
-    "src": "assets/audio/flashover.mp4",
-    "cover": "assets/images/flashover.jpg"
-  },
-  {
-    "title": "Fever",
-    "artist": "Enhypen",
-    "src": "assets/audio/FEVER.mp4",
-    "cover": "assets/images/Fever.jpg"
-  },
-  {
-    "title": "Bad Desire",
-    "artist": "Enhypen",
-    "src": "assets/audio/Baddesire.mp4",
-    "cover": "assets/images/Baddesire.jpg"
-  },
-  {
-    "title": "No Doubt",
-    "artist": "Enhypen",
-    "src": "assets/audio/No Doubt.mp4",
-    "cover": "assets/images/NoDoubt.jpg"
-  },
-  {
-    "title": "Brought The Heat Back",
-    "artist": "Enhypen",
-    "src": "assets/audio/Brought_The_Heat_Back_360P.mp4",
-    "cover": "assets/images/bring_the_heat_back.jpg"
-  },
-  {
-    "title": "Fate",
-    "artist": "Enhypen",
-    "src": "assets/audio/Fate_144P.mp4",
-    "cover": "assets/images/fate.jpg"
-  },
-  {
-    "title": "Let Me In",
-    "artist": "Enhypen",
-    "src": "assets/audio/Let Me In (20 CUBE).mp4",
-    "cover": "assets/images/Let_me_in.jpg"
-  },
-  {
-    "title": "Into Thhe I-LAND",
-    "artist": "Enhypen",
-    "src": "assets/audio/Into the I-LAND.mp4",
-    "cover": "assets/images/intotheiland.jpg"
-  }
-  ,{
-    "title": "Spark-(Winter)",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/spark_winter.mp4",
-    "cover": "assets/images/Spark.jpg"
-  },
-  {
-    "title": "Up-(Karina)",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/UP (KARINA Solo).mp4",
-    "cover": "assets/images/up.jpg"
-  },
-  { 
-    "title": "Bored-(Ningning)",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/bored.mp4",
-    "cover": "assets/images/bored.jpg"
-  }
-  ,{
-    "title": "Dopamine-(Giselle)",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/Dopamine (GISELLE Solo).mp4",
-    "cover": "assets/images/Dopamine.jpg"
-  },
-  {
-    "title": "Lucid Dream",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/자각몽 Lucid Dream.mp4",
-    "cover": "assets/images/lucid.jpg"
-  },
-  {
-    "title": "Thirsty",
-    "artist": "aespa(에스파)",
-    "src": "assets/audio/aespa 'Thirsty' (Official Audio).mp4",
-    "cover": "assets/images/thirsty.jpg"
-  },
-  {
-    "title": "Fabulous",
-    "artist": "TAEYEON(태연)",
-    "src": "assets/audio/Fabulous.mp4",
-    "cover": "assets/images/Fabulous.jpg"
-  },
-  {
-    "title": "Siren",
-    "artist": "TAEYEON(태연)",
-    "src": "assets/audio/Siren.mp4",
-    "cover": "assets/images/siren.jpg"
-  },
-  {
-    "title": "Bitter Sweet Confession",
-    "artist": "Jenna Norodom",
-    "src": "assets/audio/bittersweet_jenna.mp4",
-    "cover": "assets/images/bittersweet_confession.jpg"
-  }
-
-
+  { "id": 1, "title": "Ash", "artist": "Le Sserafim(르세라핌)", "src": "assets/audio/Ash.mp4", "cover": "assets/images/Ash.jpg" },
+  { "id": 2, "title": "Flowers", "artist": "aespa(에스파)", "src": "assets/audio/aespa_flower.mp4", "cover": "assets/images/Flowers.jpg" },
+  { "id": 3, "title": "Fame Is A Gun", "artist": "Adison Rae", "src": "assets/audio/Fame is a gun.mp4", "cover": "assets/images/Fame.jpg" },
+  { "id": 4, "title": "Shinigami Eyes", "artist": "Grimes (그라임스)", "src": "assets/audio/Grimes - Shinigami Eyes (Lyrics).mp4", "cover": "assets/images/ShigamiEyes.jpg" },
+  { "id": 5, "title": "Lucky One", "artist": "Cosmosy", "src": "assets/audio/luckyone.mp4", "cover": "assets/images/luckyone.jpg" },
+  { "id": 6, "title": "Diet Pepsi", "artist": "Adison Rae", "src": "assets/audio/diet_pepsi.mp4", "cover": "assets/images/dietpepsi.jpg" },
+  { "id": 7, "title": "Heaven And Back", "artist": "chase atlantic", "src": "assets/audio/Chase Atlantic - HEAVEN AND BACK.mp4", "cover": "assets/images/heaven_and_back.jpg" },
+  { "id": 8, "title": "Hurt You", "artist": "The Weeknd", "src": "assets/audio/The Weeknd - Hurt You feat. Gesaffelstein (Official Audio).mp4", "cover": "assets/images/hurt.jpg" },
+  { "id": 9, "title": "Deja Vu", "artist": "Dream Catcher", "src": "assets/audio/Dreamcatcher(드림캐쳐) '데자부 (Deja Vu)' MV.mp4", "cover": "assets/images/dream catcher.jpg" },
+  { "id": 10, "title": "Greedy", "artist": "Tate McRae", "src": "assets/audio/Tate McRae - greedy (Official Video).mp4", "cover": "assets/images/Greedy.jpg" },
+  { "id": 11, "title": "4 Walls", "artist": "F(X)", "src": "assets/audio/F(x) 4 walls audio ver..mp4", "cover": "assets/images/world_class_sinner.jpg" },
+  { "id": 12, "title": "Drift", "artist": "aespa(에스파)", "src": "assets/audio/dift-aespa.mp4", "cover": "assets/images/dift aespa.jpg" },
+  { "id": 13, "title": "Mine", "artist": "aespa(에스파)", "src": "assets/audio/aespa_mine.mp4", "cover": "assets/images/mine.jpg" },
+  { "id": 14, "title": "Kill It", "artist": "aespa(에스파)", "src": "assets/audio/Kill It.mp4", "cover": "assets/images/kill--it.jpg" },
+  { "id": 15, "title": "Right Now", "artist": "Newjeans(뉴진스)", "src": "assets/audio/NewJeans - 'Right Now' [Audio].mp4", "cover": "assets/images/rightnow.jpg" },
+  { "id": 16, "title": "Seoul City", "artist": "Jennie", "src": "assets/audio/JENNIE - Seoul City (Official Lyric Video).mp4", "cover": "assets/images/seoulcity.jpg" },
+  { "id": 17, "title": "Gala", "artist": "XG", "src": "assets/audio/Gala.mp4", "cover": "assets/images/gala.jpg" },
+  { "id": 18, "title": "Something ain't right", "artist": "XG", "src": "assets/audio/sth_aint_right.mp4", "cover": "assets/images/sth_aint_right.jpg" },
+  { "id": 19, "title": "Imaginary friend", "artist": "ITZY", "src": "assets/audio/Imaginary Friend.mp4", "cover": "assets/images/imaginary_friend.jpg" },
+  { "id": 20, "title": "Simon Says", "artist": "YC BANKS ft B Smyth", "src": "assets/audio/YC BANKS - Simon Says ft. B Smyth  (Audio) _ (Spread open your legs).mp4", "cover": "assets/images/simonsay.jpg" },
+  { "id": 21, "title": "Reminder", "artist": "The Weeknd", "src": "assets/audio/Reminder.mp4", "cover": "assets/images/reminder.jpg" },
+  { "id": 22, "title": "Everytime", "artist": "Ariana Grande", "src": "assets/audio/everytime.mp4", "cover": "assets/images/everytime.jpg" },
+  { "id": 23, "title": "Double Fantasy", "artist": "The Weeknd", "src": "assets/audio/doubleFantasy.mp4", "cover": "assets/images/double_fantasy.jpg" },
+  { "id": 24, "title": "Unforgettable", "artist": "French Montana", "src": "assets/audio/Unforgettable.mp4", "cover": "assets/images/unforgetable.jpg" },
+  { "id": 25, "title": "Escapism", "artist": "RAYE", "src": "assets/audio/Escapism._Sped_Up_144p.mp4", "cover": "assets/images/escip.jpg" },
+  { "id": 26, "title": "Harleys in Hawaii", "artist": "Katy Perry", "src": "assets/audio/Harleys_In_Hawaii_144P.mp4", "cover": "assets/images/harley_in_hawaii.jpg" },
+  { "id": 27, "title": "WHEN I M WITH YOU (ft Tyla)", "artist": "Lisa", "src": "assets/audio/LISA_-_WHEN_I_M_WITH_YOU_feat._Tyla_Official_Music_Video_360P.mp4", "cover": "assets/images/wheniamwithyou.jpg" },
+  { "id": 28, "title": "Moonstruck", "artist": "Enhypen", "src": "assets/audio/ENHYPEN (엔하이픈) 'Moonstruck' Official Audio.mp4", "cover": "assets/images/moonstruck.jpg" },
+  { "id": 29, "title": "Fatal Trouble", "artist": "Enhypen", "src": "assets/audio/Fatal Trouble.mp4", "cover": "assets/images/fetal_trouble.jpg" },
+  { "id": 30, "title": "Flashover", "artist": "Enhypen", "src": "assets/audio/flashover.mp4", "cover": "assets/images/flashover.jpg" },
+  { "id": 31, "title": "Fever", "artist": "Enhypen", "src": "assets/audio/FEVER.mp4", "cover": "assets/images/Fever.jpg" },
+  { "id": 32, "title": "Bad Desire", "artist": "Enhypen", "src": "assets/audio/Baddesire.mp4", "cover": "assets/images/Baddesire.jpg" },
+  { "id": 33, "title": "No Doubt", "artist": "Enhypen", "src": "assets/audio/No Doubt.mp4", "cover": "assets/images/NoDoubt.jpg" },
+  { "id": 34, "title": "Brought The Heat Back", "artist": "Enhypen", "src": "assets/audio/Brought_The_Heat_Back_360P.mp4", "cover": "assets/images/bring_the_heat_back.jpg" },
+  { "id": 35, "title": "Fate", "artist": "Enhypen", "src": "assets/audio/Fate_144P.mp4", "cover": "assets/images/fate.jpg" },
+  { "id": 36, "title": "Let Me In", "artist": "Enhypen", "src": "assets/audio/Let Me In (20 CUBE).mp4", "cover": "assets/images/Let_me_in.jpg" },
+  { "id": 37, "title": "Into Thhe I-LAND", "artist": "Enhypen", "src": "assets/audio/Into the I-LAND.mp4", "cover": "assets/images/intotheiland.jpg" },
+  { "id": 38, "title": "Spark-(Winter)", "artist": "aespa(에스파)", "src": "assets/audio/spark_winter.mp4", "cover": "assets/images/Spark.jpg" },
+  { "id": 39, "title": "Up-(Karina)", "artist": "aespa(에스파)", "src": "assets/audio/UP (KARINA Solo).mp4", "cover": "assets/images/up.jpg" },
+  { "id": 40, "title": "Bored-(Ningning)", "artist": "aespa(에스파)", "src": "assets/audio/bored.mp4", "cover": "assets/images/bored.jpg" },
+  { "id": 41, "title": "Dopamine-(Giselle)", "artist": "aespa(에스파)", "src": "assets/audio/Dopamine (GISELLE Solo).mp4", "cover": "assets/images/Dopamine.jpg" },
+  { "id": 42, "title": "Lucid Dream", "artist": "aespa(에스파)", "src": "assets/audio/자각몽 Lucid Dream.mp4", "cover": "assets/images/lucid.jpg" },
+  { "id": 43, "title": "Thirsty", "artist": "aespa(에스파)", "src": "assets/audio/aespa 'Thirsty' (Official Audio).mp4", "cover": "assets/images/thirsty.jpg" },
+  { "id": 44, "title": "Fabulous", "artist": "TAEYEON(태연)", "src": "assets/audio/Fabulous.mp4", "cover": "assets/images/Fabulous.jpg" },
+  { "id": 45, "title": "Siren", "artist": "TAEYEON(태연)", "src": "assets/audio/Siren.mp4", "cover": "assets/images/siren.jpg" },
+  { "id": 46, "title": "Bitter Sweet Confession", "artist": "Jenna Norodom", "src": "assets/audio/bittersweet_jenna.mp4", "cover": "assets/images/bittersweet_confession.jpg" },
+  { "id": 47, "title": "Rockstar Sh*t", "artist": "G-Devith", "src": "assets/audio/Rockstarsht_gdevith.mp4", "cover": "assets/images/rockstar.jpg" },
+  { "id": 48, "title": "Drown", "artist": "G-Devith", "src": "assets/audio/G-Devith - ទឹកលិចកញ្ចឹងក ( DROWN ) _ Street Ver.mp4", "cover": "assets/images/drown.jpg" },
+  { "id": 49, "title": "DISCO BAR", "artist": "G-Devith", "src": "assets/audio/G-Devith - DISCO BAR.mp4", "cover": "assets/images/discobar.jpg" },
+  { "id": 50, "title": "Miss. Dior", "artist": "G-Devith", "src": "assets/audio/G-Devith - នារី Dior _ Official Lyric Video.mp4", "cover": "assets/images/dior.jpg" },
+  { "id": 51, "title": "The Moon", "artist": "G-Devith", "src": "assets/audio/G-Devith - ដួងច័ន្ទ ( THE MOON ) Official M_V.mp4", "cover": "assets/images/The MOON.jpg" }
 ]

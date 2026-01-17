@@ -695,6 +695,10 @@
     queueIndex = window.currentIndex || 0;
   }
 
-  window.tracks ? initPlaylist() : document.addEventListener('DOMContentLoaded', () => setTimeout(initPlaylist, 100));
+if (window.tracks?.length) {
+  initPlaylist();
+} else {
+  document.addEventListener('tracksLoaded', initPlaylist);
+}
 
 })();
