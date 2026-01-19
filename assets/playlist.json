@@ -1,6 +1,7 @@
 [
-  { "id": 1, "title": "Ash", "artist": "Le Sserafim(르세라핌)", "src": "assets/audio/Ash.mp4", "cover": "assets/images/Ash.jpg" },
-  { "id": 2, "title": "Flowers", "artist": "aespa(에스파)", "src": "assets/audio/aespa_flower.mp4", "cover": "assets/images/Flowers.jpg" },
+
+  { "id": 1, "title": "Flowers", "artist": "aespa(에스파)", "src": "assets/audio/aespa_flower.mp4", "cover": "assets/images/Flowers.jpg" },
+  { "id": 2, "title": "Ash", "artist": "Le Sserafim(르세라핌)", "src": "assets/audio/Ash.mp4", "cover": "assets/images/Ash.jpg" },
   { "id": 3, "title": "Fame Is A Gun", "artist": "Adison Rae", "src": "assets/audio/Fame is a gun.mp4", "cover": "assets/images/Fame.jpg" },
   { "id": 4, "title": "Shinigami Eyes", "artist": "Grimes (그라임스)", "src": "assets/audio/Grimes - Shinigami Eyes (Lyrics).mp4", "cover": "assets/images/ShigamiEyes.jpg" },
   { "id": 5, "title": "Lucky One", "artist": "Cosmosy", "src": "assets/audio/luckyone.mp4", "cover": "assets/images/luckyone.jpg" },

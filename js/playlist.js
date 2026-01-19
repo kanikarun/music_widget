@@ -315,21 +315,6 @@
     syncWidgetFavorite();
     updateActiveTrack();
     updateMediaSession(window.tracks[window.currentIndex]);
-    updateActiveFavorites();
-
-  }
-  function updateActiveFavorites() {
-    if (!favoritesTracks || window.currentIndex == null) return;
-
-    favoritesTracks.querySelectorAll('.playlist-item').forEach(item => {
-      item.classList.toggle(
-        'active',
-        Number(item.dataset.index) === window.currentIndex
-      );
-    });
-
-    const active = favoritesTracks.querySelector('.playlist-item.active');
-    active?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function playPrevTrack() {
@@ -347,8 +332,6 @@
     syncWidgetFavorite();
     updateActiveTrack();
     updateMediaSession(window.tracks[window.currentIndex]);
-    updateActiveFavorites();
-
   }
 
   nextBtn?.addEventListener('click', playNextTrack);
@@ -441,7 +424,6 @@
         disc.style.transform = 'rotate(0deg)';
       }
     }
-    updateActiveFavorites();
 
     updateActiveTrack();
   };
@@ -586,12 +568,6 @@
       const index = window.tracks.indexOf(track);
       const item = document.createElement('div');
       item.className = 'playlist-item';
-      item.dataset.index = index;
-
-      if (index === window.currentIndex) {
-        item.classList.add('active');
-      }
-
 
       item.innerHTML = `
         <img src="${track.cover}" class="playlist-item-cover">
@@ -677,28 +653,36 @@
 
     updateSortButtonState();
     renderPlaylist();
-    syncWidgetFavorite();
-
+    
     // Initialize play/pause icons correctly on load
     updatePlayPauseIcons(!audio.paused);
 
     // Initialize media session immediately on page load
     if (window.currentIndex != null) {
       updateMediaSession(window.tracks[window.currentIndex]);
+      syncWidgetFavorite(); // Sync after setting current index
     } else if (window.tracks[0]) {
       // If no track is set, use the first track
       window.currentIndex = 0;
       updateMediaSession(window.tracks[0]);
+      syncWidgetFavorite(); // Sync after setting current index
     }
 
     playQueue = window.tracks.map((_, i) => i);
     queueIndex = window.currentIndex || 0;
+    
+    // Sync again after a short delay to ensure DOM is ready
+    setTimeout(() => {
+      syncWidgetFavorite();
+    }, 100);
   }
 
-if (window.tracks?.length) {
-  initPlaylist();
-} else {
-  document.addEventListener('tracksLoaded', initPlaylist);
-}
+  if (window.tracks?.length) {
+    initPlaylist();
+  } else {
+    document.addEventListener('tracksLoaded', initPlaylist);
+  }
+
+  window.tracks ? initPlaylist() : document.addEventListener('DOMContentLoaded', () => setTimeout(initPlaylist, 100));
 
 })();

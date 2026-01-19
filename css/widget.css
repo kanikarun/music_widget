@@ -129,18 +129,23 @@
 
 .ctrl-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
   width:100%;
 }
 
-.time{font-size:13px;color:var(--muted)}
+.time{
+  font-size:13px;
+  color:var(--muted);
+  min-width:40px;
+  flex-shrink:0;
+}
 
 .ctrl-actions {
   display: flex;
   gap: 12px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -397,12 +402,15 @@
 
   .ctrl-row{
     flex-direction:row;
+    justify-content:space-between;
     width:100%;
     gap:8px;
   }
 
   .ctrl-actions{
     gap:10px;
+    flex:1;
+    justify-content:center;
   }
 
   .small-btn, #play-inline{
@@ -482,12 +490,15 @@
 
   .ctrl-row{
     flex-direction:row;
+    justify-content:space-between !important;
     width:100%;
     gap:10px;
   }
 
   .ctrl-actions{
     gap:12px;
+    flex:1 !important;
+    justify-content:center !important;
   }
 
   .small-btn, #play-inline{
@@ -558,12 +569,15 @@
 
   .ctrl-row{
     flex-direction:row;
+    justify-content:space-between !important;
     width:100%;
     gap:12px;
   }
 
   .ctrl-actions{
     gap:14px;
+    flex:1 !important;
+    justify-content:center !important;
   }
 
   .small-btn, #play-inline{
@@ -622,11 +636,14 @@
 
   .ctrl-row{
     flex-direction:row;
+    justify-content:space-between !important;
     gap:14px;
   }
 
   .ctrl-actions{
     gap:14px;
+    flex:1 !important;
+    justify-content:center !important;
   }
 
   .small-btn, #play-inline{
@@ -678,7 +695,14 @@
   }
 
   .ctrl-row{
+    flex-direction:row;
+    justify-content:space-between !important;
     gap:16px;
+  }
+
+  .ctrl-actions{
+    flex:1 !important;
+    justify-content:center !important;
   }
 
   .small-btn, #play-inline{
@@ -707,6 +731,14 @@
   .progress{
     width:100% !important;
   }
+
+  .ctrl-row{
+    justify-content:space-between !important;
+  }
+
+  .ctrl-actions{
+    justify-content:flex-end !important;
+  }
 }
 
 /* Laptops and desktops (1367px+) */
@@ -723,6 +755,14 @@
 
   .progress{
     width:100% !important;
+  }
+
+  .ctrl-row{
+    justify-content:space-between !important;
+  }
+
+  .ctrl-actions{
+    justify-content:flex-end !important;
   }
 }
 
