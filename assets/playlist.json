@@ -565,5 +565,26 @@
     "artist": "Ros SereySothea",
     "src": "assets/audio/nirkphunmphnumthom.mp4",
     "cover": "assets/images/NirkPhumPhnnumTHom.jpg"
+  },
+  {
+    "id": 82,
+    "title": "Lost In The Fire",
+    "artist": "The Weeknd",
+    "src": "assets/audio/Gesaffelstein & The Weeknd - Lost in the Fire (Official Video).mp4",
+    "cover": "assets/images/lost_in_fire.jpg"
+  },
+  {
+    "id": 83,
+    "title": "Icarus",
+    "artist": "ARTMS",
+    "src": "assets/audio/ARTMS 'Icarus' Official Dance _ ARTMS.mp4",
+    "cover": "assets/images/Icrus.jpg"
+  },
+  {
+    "id": 84,
+    "title": "Virtual Angel",
+    "artist": "ARTMS",
+    "src": "assets/audio/virtual angel.mp4",
+    "cover": "assets/images/Virtual_angel.jpg"
   }
 ]
